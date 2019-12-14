@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-
-class Home extends Component {
+import { PageDetails } from "../PageDetails";
+export class Home extends Component {
   render() {
-    return <div>Home</div>;
+    return (
+      <PageDetails
+        title="Computer world"
+        description="We provide you the best service, come home to quality"
+      />
+    );
   }
 }
-
-export default Home;

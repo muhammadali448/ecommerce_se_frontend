@@ -1,10 +1,13 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { reducer as formReducer } from "redux-form";
 const initialState = {};
 const middleware = [thunk];
-const reducers = combineReducers({});
+const reducers = combineReducers({
+  form: formReducer
+});
 
-const store = createStore(
+export const store = createStore(
   reducers,
   initialState,
   compose(
@@ -12,5 +15,3 @@ const store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
-
-export default store;
