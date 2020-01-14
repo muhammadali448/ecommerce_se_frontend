@@ -22,7 +22,11 @@ export const loginUser = (userData, history) => async dispatch => {
     axios.defaults.headers.common["Authorization"] = token;
     dispatch(getUserData(res.data.user._id));
     dispatch({ type: CLEAR_ERRORS });
-    history.push("/");
+    if (res.data.user.admin) {
+      history.push("/adminDashboard");
+    } else {
+      history.push("/userDashboard");
+    }
   } catch (error) {
     dispatch({
       type: SET_ERRORS,
@@ -68,7 +72,7 @@ export const signupUser = (userData, history) => async dispatch => {
   }
 };
 
-export const getUserData = (userId) => async dispatch => {
+export const getUserData = userId => async dispatch => {
   dispatch({ type: LOADING_USER });
   try {
     const res = await axios.get(`${BASE_URL}/user/${userId}`);
