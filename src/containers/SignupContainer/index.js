@@ -1,9 +1,26 @@
 import React, { Component } from "react";
 import { SignupForm } from "../../components/Signup";
-export class SignupContainer extends Component {
+import { connect } from "react-redux";
+import { signupUser } from "../../store/actions/user";
+class SignupContainer extends Component {
   render() {
-    return <SignupForm />;
+    const {
+      UI: { loading, errors }
+    } = this.props;
+    return (
+      <SignupForm
+        signup={this.props.signupUser}
+        loading={loading}
+        errors={errors}
+      />
+    );
   }
 }
 
+const mapStateToProps = ({ UI }) => {
+  return {
+    UI
+  };
+};
 
+export default connect(mapStateToProps, { signupUser })(SignupContainer);

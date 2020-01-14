@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import { Field, reduxForm } from "redux-form";
-import { validate } from "./validation";
+import { validate } from "../../common/formValidation";
 import { formInput, formPassword } from "../Input";
 import Person from "@material-ui/icons/Person";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {styles} from "./styles";
+import { styles } from "../../common/formStyles";
 
 class Signup extends Component {
   state = {
@@ -23,12 +24,12 @@ class Signup extends Component {
     this.setState({ showPassword: !this.state.showPassword });
   };
 
-  componentWillUnmount() {}
-
-  onSignup(data) {}
+  onSignup(data) {
+    this.props.signup(data);
+  }
 
   render() {
-    const { classes, handleSubmit } = this.props;
+    const { classes, handleSubmit, errors, loading } = this.props;
     return (
       <main className={classes.main}>
         <Paper className={classes.paper}>
@@ -56,11 +57,11 @@ class Signup extends Component {
               name="confirmPassword"
               component={formInput}
             />
-            {/* {this.props.errorMessage ? (
+            {errors.error ? (
               <small style={{ color: "red", marginTop: 10 }}>
-                {this.props.errorMessage}
+                {errors.error}
               </small>
-            ) : null} */}
+            ) : null}
             <Button
               type="submit"
               fullWidth
@@ -68,7 +69,7 @@ class Signup extends Component {
               color="primary"
               className={classes.submit}
             >
-              Sign up
+              {loading ? <CircularProgress /> : "Sign up"}
             </Button>
           </form>
         </Paper>
@@ -81,4 +82,3 @@ export let SignupForm = reduxForm({
   validate: validate,
   form: "SignupForm"
 })(withStyles(styles)(Signup));
-

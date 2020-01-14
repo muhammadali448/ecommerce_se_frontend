@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -21,7 +21,7 @@ const isActive = (history, route) => {
   }
 };
 
-export const Menu = withRouter(({ history }) => {
+export const Menu = withRouter(({ history, authenticated, logout }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -34,20 +34,37 @@ export const Menu = withRouter(({ history }) => {
           <ListItemLink color="inherit" style={isActive(history, "/")} to="/">
             Home
           </ListItemLink>
-          <ListItemLink
-            color="inherit"
-            style={isActive(history, "/login")}
-            to="/login"
-          >
-            Login
-          </ListItemLink>
-          <ListItemLink
-            color="inherit"
-            style={isActive(history, "/signup")}
-            to="/signup"
-          >
-            Signup
-          </ListItemLink>
+          {!authenticated ? (
+            <Fragment>
+              <ListItemLink
+                color="inherit"
+                style={isActive(history, "/login")}
+                to="/login"
+              >
+                Login
+              </ListItemLink>
+              <ListItemLink
+                color="inherit"
+                style={isActive(history, "/signup")}
+                to="/signup"
+              >
+                Signup
+              </ListItemLink>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <ListItemLink
+                color="inherit"
+                style={isActive(history, "/userDashboard")}
+                to="/userDashboard"
+              >
+                Dashboard
+              </ListItemLink>
+              <Button color="inherit" onClick={() => logout()}>
+                Logout
+              </Button>
+            </Fragment>
+          )}
         </Toolbar>
       </AppBar>
     </div>

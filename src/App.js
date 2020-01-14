@@ -7,6 +7,7 @@ import { SET_AUTHENTICATED } from "./store/types";
 import { store } from "./store/store";
 import { logoutUser, getUserData } from "./store/actions/user";
 const token = localStorage.getItem("token");
+const id = localStorage.getItem("id");
 if (token) {
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
@@ -16,7 +17,7 @@ if (token) {
   } else {
     axios.defaults.headers.common["Authorization"] = token;
     store.dispatch({ type: SET_AUTHENTICATED });
-    store.dispatch(getUserData());
+    store.dispatch(getUserData(id));
   }
 }
 export class App extends Component {
