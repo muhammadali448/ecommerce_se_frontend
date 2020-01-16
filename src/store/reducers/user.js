@@ -7,6 +7,7 @@ import {
 
 const INITIAL_STATE = {
   authenticated: false,
+  admin: false,
   loading: false,
   credentials: {}
 };
@@ -16,7 +17,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
     case SET_AUTHENTICATED:
       return {
         ...state,
-        authenticated: true
+        authenticated: true,
+        admin: action.payload
       };
     case SET_UNAUTHENTICATED:
       return INITIAL_STATE;

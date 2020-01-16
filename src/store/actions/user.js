@@ -19,8 +19,9 @@ export const loginUser = (userData, history) => async dispatch => {
     const token = `Bearer ${res.data.token}`;
     localStorage.setItem("token", token);
     localStorage.setItem("id", res.data.user._id);
+    localStorage.setItem("admin", res.data.user.admin);
     axios.defaults.headers.common["Authorization"] = token;
-    dispatch(getUserData(res.data.user._id));
+    await dispatch(getUserData(res.data.user._id));
     dispatch({ type: CLEAR_ERRORS });
     if (res.data.user.admin) {
       history.push("/adminDashboard");
@@ -35,11 +36,25 @@ export const loginUser = (userData, history) => async dispatch => {
   }
 };
 
+export const getUserData = userId => async dispatch => {
+  dispatch({ type: LOADING_USER });
+  try {
+    const res = await axios.get(`${BASE_URL}/user/${userId}`);
+    dispatch({
+      type: SET_USER,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const logoutUser = () => async dispatch => {
   try {
     await axios.get(`${BASE_URL}/auth/signout`);
     localStorage.removeItem("token");
     localStorage.removeItem("id");
+    localStorage.removeItem("admin");
     delete axios.defaults.headers.common["Authorization"];
     dispatch({
       type: SET_UNAUTHENTICATED
@@ -69,18 +84,5 @@ export const signupUser = (userData, history) => async dispatch => {
       type: SET_ERRORS,
       payload: error.response.data
     });
-  }
-};
-
-export const getUserData = userId => async dispatch => {
-  dispatch({ type: LOADING_USER });
-  try {
-    const res = await axios.get(`${BASE_URL}/user/${userId}`);
-    dispatch({
-      type: SET_USER,
-      payload: res.data
-    });
-  } catch (error) {
-    console.log(error);
   }
 };

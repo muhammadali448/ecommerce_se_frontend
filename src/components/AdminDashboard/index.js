@@ -11,7 +11,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import useStyles from "./styles";
 
-export function UserDashboard({ user }) {
+export function AdminDashboard({ user }) {
   const classes = useStyles();
   const history = useHistory();
   const { name, email } = user;
@@ -29,21 +29,21 @@ export function UserDashboard({ user }) {
     }
   };
 
-  const UserLinks = () => (
+  const AdminLinks = () => (
     <List component="nav" aria-label="main mailbox folders">
       <ListItemLink
         color="inherit"
-        style={isActive(history, "/myCart")}
-        to="/myCart"
+        style={isActive(history, "/admin/createCategory")}
+        to="/admin/createCategory"
       >
-        My Cart
+        Create Category
       </ListItemLink>
       <ListItemLink
         color="inherit"
-        style={isActive(history, "/profileUpdate")}
-        to="/profileUpdate"
+        style={isActive(history, "/admin/createProduct")}
+        to="/admin/createProduct"
       >
-        Profile Update
+        Create Product
       </ListItemLink>
     </List>
   );
@@ -69,21 +69,6 @@ export function UserDashboard({ user }) {
     </Card>
   );
 
-  const PurchaseHistory = () => (
-    <Card className={classes.card} variant="outlined">
-      <CardContent>
-        <Typography
-          className={classes.title}
-          component="h1"
-          variant="h1"
-          gutterBottom
-        >
-          Purchase History
-        </Typography>
-      </CardContent>
-    </Card>
-  );
-
   return (
     <Fragment>
       <PageDetails title="Dashboard" description={`Good day, ${name}`} />
@@ -91,13 +76,10 @@ export function UserDashboard({ user }) {
       <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={3}>
           <Grid item md={3} lg={3}>
-            <Paper>{UserLinks()}</Paper>
+            <Paper>{AdminLinks()}</Paper>
           </Grid>
           <Grid item md={9} lg={9}>
-            <Fragment>
-              {/* {UserInfo()} */}
-              {PurchaseHistory()}
-            </Fragment>
+            <Fragment>{UserInfo()}</Fragment>
           </Grid>
         </Grid>
       </Container>

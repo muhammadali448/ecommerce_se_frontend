@@ -6,6 +6,8 @@ import SignupContainer from "../containers/SignupContainer/";
 import MenuContainer from "../containers/MenuContainer";
 import AuthRoute from "./AuthRoute";
 import UserDashboardContainer from "../containers/UserDashboardContainer";
+import AdminDashboardContainer from "../containers/AdminDashboardContainer";
+import AdminRoute from "./AdminRoute";
 export const AppRoutes = () => (
   <Router>
     <div className="container">
@@ -14,7 +16,16 @@ export const AppRoutes = () => (
         <Route exact path="/" component={HomeContainer} />
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/signup" component={SignupContainer} />
-        <AuthRoute exact path="/userDashboard" component={UserDashboardContainer} />
+        <AuthRoute
+          exact
+          path="/userDashboard"
+          component={UserDashboardContainer}
+        />
+        <AdminRoute
+          exact
+          path="/adminDashboard"
+          component={AdminDashboardContainer}
+        />
       </Switch>
     </div>
   </Router>
