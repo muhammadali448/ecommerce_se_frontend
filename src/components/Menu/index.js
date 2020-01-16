@@ -21,7 +21,7 @@ const isActive = (history, route) => {
   }
 };
 
-export const Menu = withRouter(({ history, authenticated, logout }) => {
+export const Menu = withRouter(({ history, authenticated, admin, logout }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -55,8 +55,11 @@ export const Menu = withRouter(({ history, authenticated, logout }) => {
             <Fragment>
               <ListItemLink
                 color="inherit"
-                style={isActive(history, "/userDashboard")}
-                to="/userDashboard"
+                style={isActive(
+                  history,
+                  admin ? "/adminDashboard" : "/userDashboard"
+                )}
+                to={admin ? "/adminDashboard" : "/userDashboard"}
               >
                 Dashboard
               </ListItemLink>

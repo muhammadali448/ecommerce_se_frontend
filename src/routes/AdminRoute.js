@@ -9,9 +9,6 @@ const AdminRoute = ({ component: Component, ...rest }) => {
     authenticated,
     admin
   }));
-  const user = useSelector(({ user }) => user);
-  console.log("--user: ", user);
-  console.log("-----auth: ", authenticated + "  " + admin);
   return (
     <Route
       {...rest}

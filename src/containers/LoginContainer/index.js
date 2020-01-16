@@ -11,6 +11,7 @@ class LoginContainer extends Component {
     return (
       <LoginForm
         login={this.props.loginUser}
+        user={this.props.user}
         loading={loading}
         errors={errors}
         history={this.props.history}
@@ -19,9 +20,10 @@ class LoginContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ UI }) => {
+const mapStateToProps = ({ UI, user }) => {
   return {
-    UI
+    UI,
+    user
   };
 };
 

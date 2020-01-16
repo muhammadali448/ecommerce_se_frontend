@@ -8,14 +8,16 @@ class MenuContainer extends Component {
     return (
       <Menu
         authenticated={this.props.authenticated}
+        admin={this.props.admin}
         logout={this.props.logoutUser}
       />
     );
   }
 }
 
-const mapStateToProps = ({ user: { authenticated } }) => ({
-  authenticated
+const mapStateToProps = ({ user: { authenticated, admin } }) => ({
+  authenticated, 
+  admin
 });
 
 export default connect(mapStateToProps, { logoutUser })(MenuContainer);

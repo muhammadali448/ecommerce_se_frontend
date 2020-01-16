@@ -17,7 +17,7 @@ if (token) {
     window.location.href = "/login";
   } else {
     axios.defaults.headers.common["Authorization"] = token;
-    store.dispatch({ type: SET_AUTHENTICATED, payload: admin });
+    store.dispatch({ type: SET_AUTHENTICATED, payload: Boolean(admin) });
     store
       .dispatch(getUserData(id))
       .then(() => console.log("AUTH"))

@@ -27,6 +27,16 @@ class Login extends Component {
     this.props.login(data, this.props.history);
   }
 
+  componentDidMount() {
+    const { authenticated, admin } = this.props.user;
+    if (authenticated && admin) {
+      return this.props.history.push("/adminDashboard");
+    }
+    if (authenticated && !admin) {
+      return this.props.history.push("/userDashboard");
+    }
+  }
+
   render() {
     const { classes, handleSubmit, errors, loading } = this.props;
     return (
