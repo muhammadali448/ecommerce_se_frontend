@@ -12,10 +12,23 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-export const formInput = ({ input, label, type, meta: { touched, error } }) => {
+export const formInput = ({
+  input,
+  label,
+  type,
+  multiline,
+  rows,
+  meta: { touched, error }
+}) => {
   return (
     <FormControl margin="normal" fullWidth>
-      <TextField {...input} label={label} type={type} />
+      <TextField
+        {...input}
+        label={label}
+        type={type}
+        multiline={multiline}
+        rows={rows}
+      />
       <small style={{ color: "red", marginTop: 10 }}>
         {touched ? error : ""}
       </small>

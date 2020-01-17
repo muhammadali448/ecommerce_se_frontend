@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 
-export function AdminCreateCategory({ user, addCategory }) {
+export function AdminCreateCategory({ user, addCategory, errors }) {
   const classes = useStyles();
   const [name, setName] = useState("");
 
@@ -25,6 +25,11 @@ export function AdminCreateCategory({ user, addCategory }) {
               setName(e.target.value);
             }}
           />
+          {errors.error ? (
+            <small style={{ color: "red", marginTop: 10 }}>
+              {errors.error}
+            </small>
+          ) : null}
           <Button
             variant="contained"
             disabled={name === ""}
