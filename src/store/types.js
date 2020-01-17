@@ -9,3 +9,9 @@ export const SET_ERRORS = "SET_ERRORS";
 export const LOADING_UI = "LOADING_UI";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const STOP_LOADING_UI = "STOP_LOADING_UI";
+
+// Category Admin
+export const SET_CATEGORIES = "SET_CATEGORIES";
+export const ADD_CATEGORY = "ADD_CATEGORY";
+export const SET_CATEGORY = "SET_CATEGORY";
+export const DELETE_CATEGORY = "DELETE_CATEGORY";

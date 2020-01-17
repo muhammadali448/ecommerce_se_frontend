@@ -7,6 +7,7 @@ import MenuContainer from "../containers/MenuContainer";
 import AuthRoute from "./AuthRoute";
 import UserDashboardContainer from "../containers/UserDashboardContainer";
 import AdminDashboardContainer from "../containers/AdminDashboardContainer";
+import AdminCreateCategoryContainer from "../containers/AdminCreateCategoryContainer";
 import AdminRoute from "./AdminRoute";
 export const AppRoutes = () => (
   <Router>
@@ -25,6 +26,11 @@ export const AppRoutes = () => (
           exact
           path="/adminDashboard"
           component={AdminDashboardContainer}
+        />
+        <AdminRoute
+          exact
+          path="/admin/createCategory"
+          component={AdminCreateCategoryContainer}
         />
       </Switch>
     </div>

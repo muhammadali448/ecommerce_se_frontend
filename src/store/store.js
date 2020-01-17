@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import { reducer as formReducer } from "redux-form";
 import { uiReducer } from "./reducers/ui";
 import { userReducer } from "./reducers/user";
+import { categoryReducer } from "./reducers/category";
 const initialState = {};
 const middleware = [thunk];
 const reducers = combineReducers({
   form: formReducer,
   user: userReducer,
+  category: categoryReducer,
   UI: uiReducer
 });
 

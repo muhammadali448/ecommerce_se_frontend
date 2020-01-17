@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import { Field, reduxForm } from "redux-form";
-import { validate } from "../../common/formValidation";
+import { validate } from "../../common/FormInput/formValidation";
 import { formInput, formPassword } from "../Input";
 import Person from "@material-ui/icons/Person";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { styles } from "../../common/formStyles";
+import { styles } from "../../common/FormInput/formStyles";
 
 class Login extends Component {
   state = {

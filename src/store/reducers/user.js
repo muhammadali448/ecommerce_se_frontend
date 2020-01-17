@@ -9,7 +9,6 @@ const INITIAL_STATE = {
   authenticated: false,
   admin: false,
   loading: false,
-  credentials: {}
 };
 
 export const userReducer = (state = INITIAL_STATE, action) => {
