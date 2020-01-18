@@ -14,5 +14,8 @@ export const validate = values => {
   if (!values.price) {
     errors.price = "Please enter price ";
   }
+  if (!values.category) {
+    errors.category = "Please enter price ";
+  }
   return errors;
 };

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { AdminCreateProductForm } from "../../components/AdminCreateProduct";
-import { addProduct, getProducts } from "../../store/actions/admin";
+import {
+  addProduct,
+  getProducts,
+  getCategories
+} from "../../store/actions/admin";
 class AdminCreateProductContainer extends Component {
   render() {
     const {
@@ -9,27 +13,34 @@ class AdminCreateProductContainer extends Component {
       user,
       addProduct,
       getProducts,
-      product
+      product,
+      category,
+      getCategories
     } = this.props;
     return (
       <AdminCreateProductForm
-        user={this.props.user}
+        user={user}
+        getCategories={getCategories}
         loading={loading}
         errors={errors}
         addProduct={addProduct}
         getProducts={getProducts}
         product={product}
+        category={category}
       />
     );
   }
 }
 
-const mapStateToProps = ({ user, UI, product }) => ({
+const mapStateToProps = ({ user, UI, product, category }) => ({
   user,
   UI,
-  product
+  product,
+  category
 });
 
-export default connect(mapStateToProps, { addProduct, getProducts })(
-  AdminCreateProductContainer
-);
+export default connect(mapStateToProps, {
+  addProduct,
+  getProducts,
+  getCategories
+})(AdminCreateProductContainer);

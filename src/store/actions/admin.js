@@ -4,8 +4,10 @@ import {
   SET_ERRORS,
   ADD_CATEGORY,
   ADD_PRODUCT,
+  SET_CATEGORIES,
   SET_PRODUCTS
 } from "../types";
+import { reset } from "redux-form";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:8000/api";
@@ -45,6 +47,22 @@ export const getProducts = () => async (dispatch, store) => {
   }
 };
 
+export const getCategories = () => async (dispatch, store) => {
+  dispatch({
+    type: LOADING_UI
+  });
+  try {
+    const res = await axios.get(`${BASE_URL}/category/list`);
+    dispatch({ type: SET_CATEGORIES, payload: res.data });
+    dispatch(clearErrors());
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data
+    });
+  }
+};
+
 export const addProduct = data => async (dispatch, store) => {
   dispatch({
     type: LOADING_UI
@@ -55,6 +73,7 @@ export const addProduct = data => async (dispatch, store) => {
       data
     );
     dispatch({ type: ADD_PRODUCT, payload: res.data });
+    dispatch(reset("AdminCreateProductForm"));
     dispatch(clearErrors());
   } catch (error) {
     dispatch({

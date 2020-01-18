@@ -10,8 +10,14 @@ import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 import Input from "@material-ui/core/Input";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import InputLabel from "@material-ui/core/InputLabel";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+export const formSwitch = ({ input, label, meta: { touched, error } }) => {
+  return <FormControlLabel control={<Switch {...input} />} label={label} />;
+};
+
 export const formInput = ({
   input,
   label,

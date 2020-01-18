@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm, Field, reset } from "redux-form";
+import { store } from "../../store/store";
 import { PageDetails } from "../PageDetails";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -15,18 +16,26 @@ import styles from "./styles";
 import { validate } from "./validate";
 import { AdminLinks } from "../../common/AdminLinks";
 import { ProductsTable } from "./productsTable";
-import { formInput } from "../Input";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import { formInput, formSwitch } from "../Input";
+import SelectInput from "../Input/SelectInput";
 class AdminCreateProduct extends Component {
   state = {
     open: false,
-    shipped: false
+    file: null,
+    filePath: null
   };
 
   componentDidMount() {
+    this.props.getCategories();
     this.props.getProducts();
   }
+
+  handleChange = event => {
+    this.setState({
+      file: URL.createObjectURL(event.target.files[0]),
+      filePaths: event.target.files[0]
+    });
+  };
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -34,13 +43,32 @@ class AdminCreateProduct extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
+    store.dispatch(reset("AdminCreateProductForm"));
   };
 
-  onAddProduct() {}
+  onAddProduct(data) {
+    console.log("---data: ", data);
+    var body = new FormData();
+    Object.keys(data).forEach(key => {
+      body.append(key, data[key]);
+    });
+     
+  }
 
   render() {
-    const { classes, addProduct, product, loading, handleSubmit } = this.props;
-    console.log("---products: ", this.state.shipped);
+    const {
+      classes,
+      addProduct,
+      product,
+      loading,
+      handleSubmit,
+      submitting,
+      category
+    } = this.props;
+    const categoriesOptions = category.categories.map(category => ({
+      value: category.name,
+      label: category.name
+    }));
     return (
       <Fragment>
         <PageDetails
@@ -69,9 +97,30 @@ class AdminCreateProduct extends Component {
                   aria-labelledby="form-dialog-title"
                 >
                   <DialogTitle id="form-dialog-title">Add Product</DialogTitle>
-                  <DialogContent>
-                    <form onSubmit={handleSubmit(this.onAddProduct.bind(this))}>
+                  <form onSubmit={handleSubmit(this.onAddProduct.bind(this))}>
+                    <DialogContent>
                       <Field label="Name" name="name" component={formInput} />
+                      <Button
+                        variant="contained"
+                        className={classes.uploadBtn}
+                        component="label"
+                      >
+                        Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className={classes.fileInput}
+                          name="image"
+                          onChange={this.handleChange}
+                        />
+                      </Button>
+                      <div className={classes.formImage}>
+                        {this.state.file ? (
+                          <img className={classes.img} src={this.state.file} />
+                        ) : (
+                          <p className="lead">No image</p>
+                        )}
+                      </div>
                       <Field
                         label="Description"
                         name="description"
@@ -97,40 +146,32 @@ class AdminCreateProduct extends Component {
                           />
                         </Grid>
                       </Grid>
-                      <Grid container spacing={3}>
-                        <Grid item md={6} lg={6} sm={12}>
-                          <FormControlLabel
-                            control={
-                              <Switch
-                                checked={this.state.shipped}
-                                onChange={e =>
-                                  this.setState({ shipped: e.target.checked })
-                                }
-                                value={this.state.shipped}
-                              />
-                            }
-                            label="Shipping?"
-                          />
-                        </Grid>
-                        <Grid item md={6} lg={6} sm={12}>
-                          <Field
-                            label="Price"
-                            name="price"
-                            type="number"
-                            component={formInput}
-                          />
-                        </Grid>
-                      </Grid>
-                    </form>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={this.handleClose} color="primary">
-                      Cancel
-                    </Button>
-                    <Button onClick={this.handleClose} color="primary">
-                      Add
-                    </Button>
-                  </DialogActions>
+                      <Field
+                        name="category"
+                        options={categoriesOptions}
+                        label="Category"
+                        placeholder="Enter Category"
+                        component={SelectInput}
+                      />
+                      <Field
+                        label="Switch?"
+                        name="shipping"
+                        component={formSwitch}
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={this.handleClose} color="primary">
+                        Cancel
+                      </Button>
+                      <Button
+                        type="submit"
+                        disabled={submitting}
+                        color="primary"
+                      >
+                        Add
+                      </Button>
+                    </DialogActions>
+                  </form>
                 </Dialog>
                 <div className={classes.container}>
                   {loading ? (
