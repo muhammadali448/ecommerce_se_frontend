@@ -36,7 +36,7 @@ export const getProducts = () => async (dispatch, store) => {
     type: LOADING_UI
   });
   try {
-    const res = await axios.get(`${BASE_URL}/product/list`);
+    const res = await axios.get(`${BASE_URL}/product/getAll`);
     dispatch({ type: SET_PRODUCTS, payload: res.data });
     dispatch(clearErrors());
   } catch (error) {
@@ -69,11 +69,11 @@ export const addProduct = data => async (dispatch, store) => {
   });
   try {
     const res = await axios.post(
-      `${BASE_URL}/create/${store().user._id}`,
+      `${BASE_URL}/product/create/${store().user._id}`,
       data
     );
-    dispatch({ type: ADD_PRODUCT, payload: res.data });
     dispatch(reset("AdminCreateProductForm"));
+    dispatch({ type: ADD_PRODUCT, payload: res.data.data });
     dispatch(clearErrors());
   } catch (error) {
     dispatch({

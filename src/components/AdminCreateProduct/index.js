@@ -26,6 +26,7 @@ class AdminCreateProduct extends Component {
   };
 
   componentDidMount() {
+    console.log("---CALLED");
     this.props.getCategories();
     this.props.getProducts();
   }
@@ -33,7 +34,7 @@ class AdminCreateProduct extends Component {
   handleChange = event => {
     this.setState({
       file: URL.createObjectURL(event.target.files[0]),
-      filePaths: event.target.files[0]
+      filePath: event.target.files[0]
     });
   };
 
@@ -47,12 +48,23 @@ class AdminCreateProduct extends Component {
   };
 
   onAddProduct(data) {
-    console.log("---data: ", data);
+    const { errors } = this.props;
     var body = new FormData();
     Object.keys(data).forEach(key => {
-      body.append(key, data[key]);
+      if (key === "category") {
+        body.append(key, data[key].value);
+      } else {
+        body.append(key, data[key]);
+      }
     });
-     
+    body.append("photo", this.state.filePath);
+    for (var value of body.values()) {
+      console.log(value);
+    }
+    this.props.addProduct(body);
+    if (!errors.error) {
+      this.setState({ open: false, file: null, filePath: null });
+    }
   }
 
   render() {
@@ -66,9 +78,10 @@ class AdminCreateProduct extends Component {
       category
     } = this.props;
     const categoriesOptions = category.categories.map(category => ({
-      value: category.name,
+      value: category._id,
       label: category.name
     }));
+    console.log("--products: ", product.products);
     return (
       <Fragment>
         <PageDetails
