@@ -70,7 +70,6 @@ class AdminCreateProduct extends Component {
   render() {
     const {
       classes,
-      addProduct,
       product,
       loading,
       handleSubmit,
@@ -167,7 +166,7 @@ class AdminCreateProduct extends Component {
                         component={SelectInput}
                       />
                       <Field
-                        label="Switch?"
+                        label="Shipping?"
                         name="shipping"
                         component={formSwitch}
                       />

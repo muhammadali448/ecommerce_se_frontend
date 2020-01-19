@@ -18,6 +18,8 @@ export const DELETE_CATEGORY = "DELETE_CATEGORY";
 
 // Product Admin
 export const SET_PRODUCTS = "SET_PRODUCTS";
+export const SET_PRODUCTS_BY_ARRIVAL = "SET_PRODUCTS_BY_ARRIVAL";
+export const SET_PRODUCTS_BY_SELL = "SET_PRODUCTS_BY_SELL";
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const SET_PRODUCT = "SET_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";

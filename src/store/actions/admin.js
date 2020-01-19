@@ -5,6 +5,8 @@ import {
   ADD_CATEGORY,
   ADD_PRODUCT,
   SET_CATEGORIES,
+  SET_PRODUCTS_BY_ARRIVAL,
+  SET_PRODUCTS_BY_SELL,
   SET_PRODUCTS
 } from "../types";
 import { reset } from "redux-form";
@@ -22,6 +24,33 @@ export const addCategory = data => async (dispatch, store) => {
       data
     );
     dispatch({ type: ADD_CATEGORY, payload: res.data });
+    dispatch(clearErrors());
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data
+    });
+  }
+};
+
+export const getProductsByFilters = (
+  sortBy,
+  order = "desc",
+  limit = 8
+) => async (dispatch, store) => {
+  dispatch({
+    type: LOADING_UI
+  });
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/product/list?sortBy=${sortBy}&order=${order}&limit=${limit}`
+    );
+    if (sortBy === "createdAt") {
+      dispatch({ type: SET_PRODUCTS_BY_ARRIVAL, payload: res.data });
+    }
+    if (sortBy === "sold") {
+      dispatch({ type: SET_PRODUCTS_BY_SELL, payload: res.data });
+    }
     dispatch(clearErrors());
   } catch (error) {
     dispatch({

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { HomeContainer } from "../containers/HomeContainer";
+import HomeContainer from "../containers/HomeContainer";
 import LoginContainer from "../containers/LoginContainer";
 import SignupContainer from "../containers/SignupContainer/";
 import MenuContainer from "../containers/MenuContainer";
