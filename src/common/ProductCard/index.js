@@ -7,17 +7,18 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "./styles";
-
-export default function ProductCard({ name, description, price }) {
+import { BASE_URL } from "../../store/actions/admin";
+export default function ProductCard({ name, description, price, photo }) {
   const classes = useStyles();
+  console.log("--photo: ", photo);
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        {/* <CardMedia
+        <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title={}
-        /> */}
+          image={photo.url}
+          title={name}
+        />
         <CardContent>
           <Typography gutterBottom variant="body1" color="primary">
             {name.split("").slice(0, 46)}...

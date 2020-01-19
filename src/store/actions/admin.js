@@ -12,7 +12,7 @@ import {
 import { reset } from "redux-form";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/api";
+export const BASE_URL = "http://localhost:8000/api";
 
 export const addCategory = data => async (dispatch, store) => {
   dispatch({
