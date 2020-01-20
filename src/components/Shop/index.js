@@ -7,6 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import { TabPanel, a11yProps } from "../../common/TabPanel";
 import { useStyles } from "./styles";
 import ProductShopCard from "../../common/ProductShopCard";
+import PricesRange from "../../common/PricesRange";
 const Shop = ({
   category,
   getCategories,
@@ -31,7 +32,7 @@ const Shop = ({
       ) : (
         <Grid container spacing={3}>
           <div className={classes.root}>
-            <Grid item md={2} lg={2}>
+            <Grid item md={3} lg={3}>
               <Tabs
                 orientation="vertical"
                 value={value}
@@ -49,8 +50,9 @@ const Shop = ({
                   />
                 ))}
               </Tabs>
+              <PricesRange />
             </Grid>
-            <Grid item md={10} lg={10}>
+            <Grid item md={9} lg={9}>
               <TabPanel value={value} index={value}>
                 {product.productsByCategories.map(
                   ({ _id, name, photo, description, price }) => (
