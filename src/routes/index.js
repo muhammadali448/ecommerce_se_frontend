@@ -9,6 +9,7 @@ import UserDashboardContainer from "../containers/UserDashboardContainer";
 import AdminDashboardContainer from "../containers/AdminDashboardContainer";
 import AdminCreateCategoryContainer from "../containers/AdminCreateCategoryContainer";
 import AdminCreateProductContainer from "../containers/AdminCreateProductContainer";
+import ShopContainer from "../containers/ShopContainer";
 import AdminRoute from "./AdminRoute";
 export const AppRoutes = () => (
   <Router>
@@ -16,6 +17,7 @@ export const AppRoutes = () => (
       <MenuContainer />
       <Switch>
         <Route exact path="/" component={HomeContainer} />
+        <Route exact path="/shop" component={ShopContainer} />
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/signup" component={SignupContainer} />
         <AuthRoute

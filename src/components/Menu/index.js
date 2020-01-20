@@ -34,6 +34,13 @@ export const Menu = withRouter(({ history, authenticated, admin, logout }) => {
           <ListItemLink color="inherit" style={isActive(history, "/")} to="/">
             Home
           </ListItemLink>
+          <ListItemLink
+            color="inherit"
+            style={isActive(history, "/shop")}
+            to="/shop"
+          >
+            Shop
+          </ListItemLink>
           {!authenticated ? (
             <Fragment>
               <ListItemLink

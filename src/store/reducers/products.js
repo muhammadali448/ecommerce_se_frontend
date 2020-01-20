@@ -4,13 +4,15 @@ import {
   SET_PRODUCT,
   DELETE_PRODUCT,
   SET_PRODUCTS_BY_ARRIVAL,
-  SET_PRODUCTS_BY_SELL
+  SET_PRODUCTS_BY_SELL,
+  SET_PRODUCTS_BY_CATEGORIES
 } from "../types";
 
 const INITIAL_STATE = {
   products: [],
   productsByArrival: [],
   productsBySell: [],
+  productsByCategories: [],
   product: {},
   loading: false
 };
@@ -21,6 +23,12 @@ export const productReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         products: action.payload,
+        loading: false
+      };
+    case SET_PRODUCTS_BY_CATEGORIES:
+      return {
+        ...state,
+        productsByCategories: action.payload,
         loading: false
       };
     case SET_PRODUCTS_BY_ARRIVAL:
