@@ -10,7 +10,6 @@ import useStyles from "./styles";
 import { BASE_URL } from "../../store/actions/admin";
 export default function ProductCard({ name, description, price, photo }) {
   const classes = useStyles();
-  console.log("--photo: ", photo);
   return (
     <Card className={classes.card}>
       <CardActionArea>

@@ -3,20 +3,30 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
+import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useStyles from "./styles";
+import { formatPriceRange } from "../../utils/priceRangesFormat";
 
-export default function PricesRange({ prices }) {
+export default function PricesRange({ productsPriceRanges, handleFilters }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState("panel1");
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState([]);
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
-  const handleCheckbox = event => {
-    setChecked(event.target.checked);
+  const handleToggle = r => () => {
+    const currentPriceRange = checked.indexOf(r);
+    const newPriceRange = [...checked];
+    if (currentPriceRange === -1) {
+      newPriceRange.push(r);
+    } else {
+      newPriceRange.splice(currentPriceRange, 1);
+    }
+    setChecked(newPriceRange);
+    handleFilters(newPriceRange, "price");
   };
   return (
     <div className={classes.root}>
@@ -35,17 +45,21 @@ export default function PricesRange({ prices }) {
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checked}
-                onChange={handleCheckbox}
-                value={checked}
-                color="primary"
+          <FormGroup>
+            {productsPriceRanges.map((r, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    onChange={handleToggle(r.range)}
+                    value={checked.indexOf(r.range) === -1}
+                    color="primary"
+                  />
+                }
+                label={`${formatPriceRange(r.range)} (${r.count})`}
               />
-            }
-            label="Rs.30,000 - Rs.39,999 (1)"
-          />
+            ))}
+          </FormGroup>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

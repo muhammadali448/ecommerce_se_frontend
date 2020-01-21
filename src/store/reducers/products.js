@@ -5,7 +5,8 @@ import {
   DELETE_PRODUCT,
   SET_PRODUCTS_BY_ARRIVAL,
   SET_PRODUCTS_BY_SELL,
-  SET_PRODUCTS_BY_CATEGORIES
+  SET_PRODUCTS_BY_CATEGORIES,
+  SET_PRODUCTS_PRICE_RANGES
 } from "../types";
 
 const INITIAL_STATE = {
@@ -13,6 +14,7 @@ const INITIAL_STATE = {
   productsByArrival: [],
   productsBySell: [],
   productsByCategories: [],
+  productsPriceRanges: [],
   product: {},
   loading: false
 };
@@ -23,6 +25,12 @@ export const productReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         products: action.payload,
+        loading: false
+      };
+    case SET_PRODUCTS_PRICE_RANGES:
+      return {
+        ...state,
+        productsPriceRanges: action.payload,
         loading: false
       };
     case SET_PRODUCTS_BY_CATEGORIES:

@@ -8,10 +8,12 @@ import { TabPanel, a11yProps } from "../../common/TabPanel";
 import { useStyles } from "./styles";
 import ProductShopCard from "../../common/ProductShopCard";
 import PricesRange from "../../common/PricesRange";
+import { formatRangeForApi } from "../../utils/priceRangesFormat";
 const Shop = ({
   category,
   getCategories,
   getProductsBySearch,
+  getProductsPriceRanges,
   product,
   errors,
   loading
@@ -19,9 +21,18 @@ const Shop = ({
   const classes = useStyles();
   const [value, setValue] = useState(false);
   const handleChange = (event, newValue) => {
-    getProductsBySearch({ category: newValue });
+    getProductsBySearch({ category: newValue }, 'category');
+    getProductsPriceRanges(newValue);
     setValue(newValue);
   };
+
+  const handleFilters = (filters, filterBy) => {
+    if (filterBy === "price") {
+      const priceFilter = formatRangeForApi(filters);
+      getProductsBySearch({ category: value, price: priceFilter });
+    }
+  };
+
   useEffect(() => {
     getCategories();
   }, [getCategories]);
@@ -44,13 +55,19 @@ const Shop = ({
                   <Tab
                     key={cat._id}
                     value={cat._id}
-                    // onClick={() => handleCatProducts(cat._id)}
                     label={cat.name}
                     {...a11yProps(cat._id)}
                   />
                 ))}
               </Tabs>
-              <PricesRange />
+              {value && (
+                <PricesRange
+                  productsPriceRanges={product.productsPriceRanges}
+                  handleFilters={(filters, filterBy) =>
+                    handleFilters(filters, filterBy)
+                  }
+                />
+              )}
             </Grid>
             <Grid item md={9} lg={9}>
               <TabPanel value={value} index={value}>

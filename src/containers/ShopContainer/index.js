@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import Shop from "../../components/Shop";
 import { connect } from "react-redux";
-import { getCategories, getProductsBySearch } from "../../store/actions/admin";
+import {
+  getCategories,
+  getProductsBySearch,
+  getProductsPriceRanges
+} from "../../store/actions/admin";
 class ShopContainer extends Component {
   render() {
     const {
@@ -9,6 +13,7 @@ class ShopContainer extends Component {
       product,
       getCategories,
       getProductsBySearch,
+      getProductsPriceRanges,
       category
     } = this.props;
     return (
@@ -17,6 +22,7 @@ class ShopContainer extends Component {
         errors={errors}
         getProductsBySearch={getProductsBySearch}
         getCategories={getCategories}
+        getProductsPriceRanges={getProductsPriceRanges}
         category={category}
         product={product}
       />
@@ -30,6 +36,8 @@ const mapStateToProps = ({ UI, product, category }) => ({
   category
 });
 
-export default connect(mapStateToProps, { getCategories, getProductsBySearch })(
-  ShopContainer
-);
+export default connect(mapStateToProps, {
+  getCategories,
+  getProductsBySearch,
+  getProductsPriceRanges
+})(ShopContainer);
