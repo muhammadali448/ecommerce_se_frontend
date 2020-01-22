@@ -51,17 +51,17 @@ export const getProductsPriceRanges = categoryId => async (dispatch, store) => {
   }
 };
 
-export const getProductsBySearch = (filters, filterBy) => async (
-  dispatch,
-  store
-) => {
+export const getProductsBySearch = (filters, page=1, ) => async (dispatch, store) => {
   try {
+    console.log("---", filters);
     const res = await axios.post(`${BASE_URL}/product/list/search/products`, {
+      sortBy: "price",
+      page,
       filters
     });
     dispatch({
       type: SET_PRODUCTS_BY_CATEGORIES,
-      payload: res.data.filterProducts
+      payload: { ...res.data }
     });
     dispatch(clearErrors());
   } catch (error) {

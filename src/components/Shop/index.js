@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Tabs from "@material-ui/core/Tabs";
@@ -9,6 +9,7 @@ import { useStyles } from "./styles";
 import ProductShopCard from "../../common/ProductShopCard";
 import PricesRange from "../../common/PricesRange";
 import { formatRangeForApi } from "../../utils/priceRangesFormat";
+import Pagination from "../../common/Pagination";
 const Shop = ({
   category,
   getCategories,
@@ -19,23 +20,44 @@ const Shop = ({
   loading
 }) => {
   const classes = useStyles();
+  const [myFilters, setMyFilters] = useState({});
   const [value, setValue] = useState(false);
-  const handleChange = (event, newValue) => {
-    getProductsBySearch({ category: newValue }, 'category');
-    getProductsPriceRanges(newValue);
-    setValue(newValue);
-  };
-
-  const handleFilters = (filters, filterBy) => {
-    if (filterBy === "price") {
-      const priceFilter = formatRangeForApi(filters);
-      getProductsBySearch({ category: value, price: priceFilter });
-    }
-  };
-
+  const [checked, setChecked] = useState([]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [productsPerPage, setProductsPerPage] = useState(10);
   useEffect(() => {
     getCategories();
   }, [getCategories]);
+  const handleChange = (event, newValue) => {
+    getProductsBySearch({ category: newValue });
+    getProductsPriceRanges(newValue);
+    setMyFilters({ category: newValue });
+    setValue(newValue);
+    setChecked([]);
+  };
+
+  const handleFilters = (filters, filterBy) => {
+    const newFilters = { ...myFilters };
+    setChecked(filters);
+    if (filterBy === "price") {
+      const price = formatRangeForApi(filters);
+      newFilters[filterBy] = price;
+    }
+    setMyFilters(newFilters);
+    getProductsBySearch(newFilters);
+  };
+  // let currentProducts = [];
+  // if (product.productsByCategories.currentPage) {
+  //   console.log("--clicked");
+  //   const indexOfLastProduct =
+  //     product.productsByCategories.currentPage * productsPerPage; // 10
+  //   const indexOfFirstProduct = indexOfLastProduct - productsPerPage; // 0
+  //   currentProducts = product.productsByCategories.filterProducts.slice(
+  //     indexOfFirstProduct,
+  //     indexOfLastProduct
+  //   ); // 0 - 10
+  // }
+  console.log("--newFilters: ", myFilters);
   return (
     <Container maxWidth="lg" className={classes.container}>
       {loading ? (
@@ -62,6 +84,8 @@ const Shop = ({
               </Tabs>
               {value && (
                 <PricesRange
+                  checked={checked}
+                  category={value}
                   productsPriceRanges={product.productsPriceRanges}
                   handleFilters={(filters, filterBy) =>
                     handleFilters(filters, filterBy)
@@ -71,16 +95,29 @@ const Shop = ({
             </Grid>
             <Grid item md={9} lg={9}>
               <TabPanel value={value} index={value}>
-                {product.productsByCategories.map(
-                  ({ _id, name, photo, description, price }) => (
-                    <ProductShopCard
-                      key={_id}
-                      name={name}
-                      price={price}
-                      photo={photo}
-                      description={description}
-                    />
-                  )
+                {value && (
+                  <Fragment>
+                    {product.productsByCategories.currentPage && (
+                      <Pagination
+                        pages={product.productsByCategories.pages}
+                        paginate={pageNo =>
+                          getProductsBySearch(myFilters, pageNo)
+                        }
+                      />
+                    )}
+                    {product.productsByCategories.filterProducts &&
+                      product.productsByCategories.filterProducts.map(
+                        ({ _id, name, photo, description, price }) => (
+                          <ProductShopCard
+                            key={_id}
+                            name={name}
+                            price={price}
+                            photo={photo}
+                            description={description}
+                          />
+                        )
+                      )}
+                  </Fragment>
                 )}
               </TabPanel>
             </Grid>

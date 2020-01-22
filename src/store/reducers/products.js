@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   products: [],
   productsByArrival: [],
   productsBySell: [],
-  productsByCategories: [],
+  productsByCategories: {},
   productsPriceRanges: [],
   product: {},
   loading: false

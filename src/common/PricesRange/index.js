@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
@@ -10,10 +10,21 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useStyles from "./styles";
 import { formatPriceRange } from "../../utils/priceRangesFormat";
 
-export default function PricesRange({ productsPriceRanges, handleFilters }) {
+export default function PricesRange({
+  productsPriceRanges,
+  handleFilters,
+  category,
+  checked
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState("panel1");
-  const [checked, setChecked] = React.useState([]);
+  // const [checked, setChecked] = React.useState([]);
+
+  // useEffect(() => {
+  //   console.log("--hit")
+  //   setChecked([]);
+  // }, [category]);
+
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -25,7 +36,7 @@ export default function PricesRange({ productsPriceRanges, handleFilters }) {
     } else {
       newPriceRange.splice(currentPriceRange, 1);
     }
-    setChecked(newPriceRange);
+    // setChecked(newPriceRange);
     handleFilters(newPriceRange, "price");
   };
   return (
@@ -51,6 +62,7 @@ export default function PricesRange({ productsPriceRanges, handleFilters }) {
                 key={index}
                 control={
                   <Checkbox
+                    checked={checked.indexOf(r.range) !== -1}
                     onChange={handleToggle(r.range)}
                     value={checked.indexOf(r.range) === -1}
                     color="primary"
