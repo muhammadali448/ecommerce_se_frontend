@@ -6,13 +6,15 @@ import {
   SET_PRODUCTS_BY_ARRIVAL,
   SET_PRODUCTS_BY_SELL,
   SET_PRODUCTS_BY_CATEGORIES,
-  SET_PRODUCTS_PRICE_RANGES
+  SET_PRODUCTS_PRICE_RANGES,
+  SET_PRODUCTS_BY_SEARCH
 } from "../types";
 
 const INITIAL_STATE = {
   products: [],
   productsByArrival: [],
   productsBySell: [],
+  searchProducts: [],
   productsByCategories: {},
   productsPriceRanges: [],
   product: {},
@@ -31,6 +33,12 @@ export const productReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         productsPriceRanges: action.payload,
+        loading: false
+      };
+    case SET_PRODUCTS_BY_SEARCH:
+      return {
+        ...state,
+        searchProducts: action.payload,
         loading: false
       };
     case SET_PRODUCTS_BY_CATEGORIES:

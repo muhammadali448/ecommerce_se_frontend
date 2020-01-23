@@ -9,6 +9,7 @@ import {
   SET_PRODUCTS_BY_SELL,
   SET_PRODUCTS_BY_CATEGORIES,
   SET_PRODUCTS,
+  SET_PRODUCTS_BY_SEARCH,
   SET_PRODUCTS_PRICE_RANGES
 } from "../types";
 import { reset } from "redux-form";
@@ -51,9 +52,27 @@ export const getProductsPriceRanges = categoryId => async (dispatch, store) => {
   }
 };
 
-export const getProductsBySearch = (filters, page=1, ) => async (dispatch, store) => {
+export const searchProducts = search => async (dispatch, store) => {
   try {
-    console.log("---", filters);
+    const res = await axios.get(`${BASE_URL}/product/search/?search=${search}`);
+    dispatch({
+      type: SET_PRODUCTS_BY_SEARCH,
+      payload: res.data
+    });
+    dispatch(clearErrors());
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data
+    });
+  }
+};
+
+export const getProductsBySearch = (filters, page = 1) => async (
+  dispatch,
+  store
+) => {
+  try {
     const res = await axios.post(`${BASE_URL}/product/list/search/products`, {
       sortBy: "price",
       page,

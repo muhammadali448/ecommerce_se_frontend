@@ -80,7 +80,7 @@ class AdminCreateProduct extends Component {
       value: category._id,
       label: category.name
     }));
-    console.log("--products: ", product.products);
+    // console.log("--products: ", product.products);
     return (
       <Fragment>
         <PageDetails
