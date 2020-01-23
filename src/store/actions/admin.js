@@ -52,9 +52,11 @@ export const getProductsPriceRanges = categoryId => async (dispatch, store) => {
   }
 };
 
-export const searchProducts = search => async (dispatch, store) => {
+export const searchProducts = data => async (dispatch, store) => {
   try {
-    const res = await axios.get(`${BASE_URL}/product/search/?search=${search}`);
+    const res = await axios.get(
+      `${BASE_URL}/product/search/?search=${data.search}&category=${data.category}`
+    );
     dispatch({
       type: SET_PRODUCTS_BY_SEARCH,
       payload: res.data

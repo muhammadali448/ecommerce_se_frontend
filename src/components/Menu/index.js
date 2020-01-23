@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -7,8 +7,9 @@ import { Link, withRouter } from "react-router-dom";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { useStyles } from "./styles";
+import { useStyles, BootstrapInput } from "./styles";
 import SearchList from "../../common/SearchList";
+import NativeSelect from "@material-ui/core/NativeSelect";
 
 const ListItemLink = props => {
   return <Button component={Link} {...props} />;
@@ -25,13 +26,31 @@ const isActive = (history, route) => {
 };
 
 export const Menu = withRouter(
-  ({ history, authenticated, admin, logout, product, searchProducts }) => {
+  ({
+    history,
+    authenticated,
+    admin,
+    logout,
+    product,
+    searchProducts,
+    getCategories,
+    category
+  }) => {
     const classes = useStyles();
     const [search, setSearch] = useState("");
+    const [categoryValue, setCategoryValue] = useState("all");
+
+    useEffect(() => {
+      getCategories();
+    }, [getCategories]);
+
+    const handleCategoryChange = e => {
+      setCategoryValue(e.target.value);
+    };
 
     const handleSearchChange = e => {
       setSearch(e.target.value);
-      searchProducts(e.target.value)
+      searchProducts({ search: e.target.value, category: categoryValue });
     };
 
     return (
@@ -56,10 +75,22 @@ export const Menu = withRouter(
                 }}
                 inputProps={{ "aria-label": "search" }}
               />
-              {search !== "" && product.searchProducts.length  > 0 && (
+              {search !== "" && product.searchProducts.length > 0 && (
                 <SearchList products={product.searchProducts} />
               )}
             </div>
+            <NativeSelect
+              input={<BootstrapInput />}
+              value={categoryValue}
+              onChange={handleCategoryChange}
+            >
+              <option value="all">Category</option>
+              {category.categories.map((c, index) => (
+                <option key={index} value={c._id}>
+                  {c.name}
+                </option>
+              ))}
+            </NativeSelect>
             <ListItemLink color="inherit" style={isActive(history, "/")} to="/">
               Home
             </ListItemLink>
