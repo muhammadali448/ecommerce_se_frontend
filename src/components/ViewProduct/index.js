@@ -16,6 +16,9 @@ export default function ViewProduct({ productId, product, getProduct }) {
           description={product.product.description}
           photo={product.product.photo}
           price={product.product.price}
+          category={product.product.category.name}
+          quantity={product.product.quantity}
+          createdAt={product.product.createdAt}
           viewProduct={true}
         />
       ) : (

@@ -107,11 +107,19 @@ const Shop = ({
                     )}
                     {product.productsByCategories.filterProducts &&
                       product.productsByCategories.filterProducts.map(
-                        ({ _id, name, photo, description, price }) => (
+                        ({
+                          _id,
+                          name,
+                          photo,
+                          description,
+                          price,
+                          quantity
+                        }) => (
                           <ProductShopCard
                             key={_id}
                             name={name}
                             price={price}
+                            quantity={quantity}
                             photo={photo}
                             description={description}
                           />
