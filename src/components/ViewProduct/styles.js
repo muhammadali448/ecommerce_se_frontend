@@ -1,5 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
+  mt: {
+    marginTop: 120
+  },
   card: {
     display: "flex",
     flex: 1,
@@ -14,10 +17,6 @@ const useStyles = makeStyles(theme => ({
     flex: 0.3,
     width: "100%",
     backgroundSize: "contain"
-  },
-  btns: {
-    display: "flex",
-    justifyContent: "flex-end"
   }
 }));
 

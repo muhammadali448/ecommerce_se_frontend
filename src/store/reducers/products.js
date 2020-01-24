@@ -62,7 +62,8 @@ export const productReducer = (state = INITIAL_STATE, action) => {
     case SET_PRODUCT:
       return {
         ...state,
-        product: action.payload
+        product: action.payload,
+        loading: false
       };
     case DELETE_PRODUCT:
       return {

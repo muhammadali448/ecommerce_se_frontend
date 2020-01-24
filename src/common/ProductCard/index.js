@@ -7,17 +7,14 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "./styles";
-import { BASE_URL } from "../../store/actions/admin";
-export default function ProductCard({ name, description, price, photo }) {
+import { useHistory } from "react-router-dom";
+export default function ProductCard({ id, name, description, price, photo }) {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={photo.url}
-          title={name}
-        />
+        <CardMedia className={classes.media} image={photo.url} title={name} />
         <CardContent>
           <Typography gutterBottom variant="body1" color="primary">
             {name.split("").slice(0, 46)}...
@@ -31,7 +28,11 @@ export default function ProductCard({ name, description, price, photo }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => history.push(`/view-product/${id}`)}
+        >
           View Product
         </Button>
         <Button size="small" color="primary">
