@@ -3,6 +3,16 @@ const useStyles = makeStyles(theme => ({
   mt: {
     marginTop: 120
   },
+  heading: {
+    height: 50,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "left",
+    alignItems: "center",
+    paddingLeft: 20,
+    backgroundColor: "#E7E7E7",
+    marginBottom: 18
+  },
   card: {
     display: "flex",
     flex: 1,

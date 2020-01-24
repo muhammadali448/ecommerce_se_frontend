@@ -6,7 +6,17 @@ import {
   getProductsBySearch,
   getProductsPriceRanges
 } from "../../store/actions/admin";
+import { store } from "../../store/store";
+import {
+  SET_PRODUCTS_PRICE_RANGES,
+  SET_PRODUCTS_BY_CATEGORIES
+} from "../../store/types";
 class ShopContainer extends Component {
+  componentWillUnmount() {
+    store.dispatch({ type: SET_PRODUCTS_BY_CATEGORIES, payload: {} });
+    store.dispatch({ type: SET_PRODUCTS_PRICE_RANGES, payload: [] });
+  }
+
   render() {
     const {
       UI: { loading, errors },

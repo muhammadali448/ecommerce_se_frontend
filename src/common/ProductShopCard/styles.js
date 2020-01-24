@@ -10,6 +10,11 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column"
   },
+  name: {
+    textDecoration: "none",
+    fontSize: 16,
+    fontWeight: "bold"
+  },
   cover: {
     flex: 0.3,
     width: "100%",

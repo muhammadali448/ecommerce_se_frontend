@@ -11,7 +11,8 @@ import {
   SET_PRODUCTS,
   SET_PRODUCTS_BY_SEARCH,
   SET_PRODUCTS_PRICE_RANGES,
-  SET_PRODUCT
+  SET_PRODUCT,
+  SET_RELATED_PRODUCTS
 } from "../types";
 import { reset } from "redux-form";
 import axios from "axios";
@@ -59,6 +60,24 @@ export const getProduct = productId => async (dispatch, store) => {
     dispatch({
       type: SET_PRODUCT,
       payload: { ...res.data }
+    });
+    dispatch(clearErrors());
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data
+    });
+  }
+};
+
+export const getRelatedProducts = productId => async (dispatch, store) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/product/list/related/${productId}`
+    );
+    dispatch({
+      type: SET_RELATED_PRODUCTS,
+      payload: res.data
     });
     dispatch(clearErrors());
   } catch (error) {

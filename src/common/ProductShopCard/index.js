@@ -5,9 +5,11 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import useStyles from "./styles";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 export default function ProductShopCard({
+  id,
   viewProduct,
   photo,
   name,
@@ -18,7 +20,6 @@ export default function ProductShopCard({
   quantity
 }) {
   const classes = useStyles();
-  console.log("--", name);
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.cover} image={photo.url} title={name} />
@@ -27,7 +28,13 @@ export default function ProductShopCard({
           variant={viewProduct ? "h4" : "body1"}
           color={viewProduct ? "inherit" : "primary"}
         >
-          {name}
+          {viewProduct ? (
+            name
+          ) : (
+            <Link className={classes.name} to={`/view-product/${id}`}>
+              {name}
+            </Link>
+          )}
         </Typography>
         {viewProduct && (
           <Fragment>

@@ -8,7 +8,14 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "./styles";
 import { useHistory } from "react-router-dom";
-export default function ProductCard({ id, name, description, price, photo }) {
+export default function ProductCard({
+  id,
+  name,
+  description,
+  price,
+  photo,
+  viewProduct
+}) {
   const classes = useStyles();
   const history = useHistory();
   return (
@@ -19,9 +26,11 @@ export default function ProductCard({ id, name, description, price, photo }) {
           <Typography gutterBottom variant="body1" color="primary">
             {name.split("").slice(0, 46)}...
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {description.split("").slice(0, 60)}
-          </Typography>
+          {!viewProduct && (
+            <Typography variant="body2" color="textSecondary" component="p">
+              {description.split("").slice(0, 80)}...
+            </Typography>
+          )}
           <Typography variant="h6" color="textPrimary" component="p">
             Rs: {price}
           </Typography>

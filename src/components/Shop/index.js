@@ -117,6 +117,7 @@ const Shop = ({
                         }) => (
                           <ProductShopCard
                             key={_id}
+                            id={_id}
                             name={name}
                             price={price}
                             quantity={quantity}

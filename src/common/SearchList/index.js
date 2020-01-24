@@ -6,9 +6,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
 import useStyles from "./styles";
 
-
+const ListItemLink = props => {
+  return <ListItem component={Link} {...props} />;
+};
 export default function SearchList({ products }) {
   const classes = useStyles();
   // console.log("-products: ", products);
@@ -16,7 +19,10 @@ export default function SearchList({ products }) {
     <List className={classes.root}>
       {products.map((product, index) => (
         <Fragment key={product._id}>
-          <ListItem alignItems="flex-start">
+          <ListItemLink
+            alignItems="flex-start"
+            to={`/view-product/${product._id}`}
+          >
             <ListItemAvatar>
               <Avatar
                 alt={product.name}
@@ -50,7 +56,7 @@ export default function SearchList({ products }) {
                 </React.Fragment>
               }
             />
-          </ListItem>
+          </ListItemLink>
           {index !== products.length && <Divider />}
         </Fragment>
       ))}
