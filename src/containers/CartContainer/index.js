@@ -10,6 +10,7 @@ class CartContainer extends Component {
       getProductsByFilters,
       product,
       authenticated,
+      userId,
       getCart,
       removeItem,
       updateItem,
@@ -20,6 +21,7 @@ class CartContainer extends Component {
         loading={loading}
         authenticated={authenticated}
         errors={errors}
+        userId={userId}
         product={product}
         cart={cart}
         getCart={getCart}
@@ -32,13 +34,14 @@ class CartContainer extends Component {
 }
 
 const mapStateToProps = ({
-  user: { authenticated },
+  user: { authenticated, _id },
   UI,
   product,
   category,
   cart
 }) => ({
   authenticated,
+  userId: _id,
   UI,
   product,
   category,
