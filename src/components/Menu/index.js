@@ -5,11 +5,15 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Link, withRouter } from "react-router-dom";
 import InputBase from "@material-ui/core/InputBase";
+import Badge from "@material-ui/core/Badge";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import SearchIcon from "@material-ui/icons/Search";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { useStyles, BootstrapInput } from "./styles";
 import SearchList from "../../common/SearchList";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import { getTotalItems } from "../../helpers/cart";
+
 
 const ListItemLink = props => {
   return <Button component={Link} {...props} />;
@@ -52,7 +56,6 @@ export const Menu = withRouter(
       setSearch(e.target.value);
       searchProducts({ search: e.target.value, category: categoryValue });
     };
-
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -91,6 +94,16 @@ export const Menu = withRouter(
                 </option>
               ))}
             </NativeSelect>
+            <ListItemLink
+              color="inherit"
+              style={isActive(history, "/cart")}
+              to="/cart"
+            >
+              <Badge badgeContent={getTotalItems()} color="secondary">
+                <ShoppingCartIcon fontSize="large" />
+              </Badge>
+            </ListItemLink>
+
             <ListItemLink color="inherit" style={isActive(history, "/")} to="/">
               Home
             </ListItemLink>

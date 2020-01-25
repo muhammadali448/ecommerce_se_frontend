@@ -36,16 +36,8 @@ export default function ViewProduct({
               </div>
               <div style={{ display: "flex", flex: 1 }}>
                 {product.relatedProducts.map(product => (
-                  <div style={{ flex: 0.2 }}>
-                    <ProductCard
-                      key={product._id}
-                      viewProduct={true}
-                      id={product._id}
-                      name={product.name}
-                      description={product.description}
-                      price={product.price}
-                      photo={product.photo}
-                    />
+                  <div style={{ flex: 0.2 }} key={product._id}>
+                    <ProductCard viewProduct={true} product={product} />
                   </div>
                 ))}
               </div>

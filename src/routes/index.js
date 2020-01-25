@@ -11,6 +11,7 @@ import AdminCreateCategoryContainer from "../containers/AdminCreateCategoryConta
 import AdminCreateProductContainer from "../containers/AdminCreateProductContainer";
 import ShopContainer from "../containers/ShopContainer";
 import ViewProductContainer from "../containers/ViewProductContainer";
+import CartContainer from "../containers/CartContainer";
 import AdminRoute from "./AdminRoute";
 export const AppRoutes = () => (
   <Router>
@@ -19,6 +20,7 @@ export const AppRoutes = () => (
       <Switch>
         <Route exact path="/" component={HomeContainer} />
         <Route exact path="/shop" component={ShopContainer} />
+        <Route exact path="/cart" component={CartContainer} />
         <Route
           exact
           path="/view-product/:productId"

@@ -8,31 +8,35 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "./styles";
 import { useHistory } from "react-router-dom";
-export default function ProductCard({
-  id,
-  name,
-  description,
-  price,
-  photo,
-  viewProduct
-}) {
+import { addToCart } from "../../helpers/cart";
+export default function ProductCard({ product, viewProduct }) {
   const classes = useStyles();
   const history = useHistory();
+  const handleAddToCart = () => {
+    addToCart(product, () => {
+      history.push("/cart");
+    });
+  };
+
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia className={classes.media} image={photo.url} title={name} />
+        <CardMedia
+          className={classes.media}
+          image={product.photo.url}
+          title={product.name}
+        />
         <CardContent>
           <Typography gutterBottom variant="body1" color="primary">
-            {name.split("").slice(0, 46)}...
+            {product.name.split("").slice(0, 46)}...
           </Typography>
           {!viewProduct && (
             <Typography variant="body2" color="textSecondary" component="p">
-              {description.split("").slice(0, 80)}...
+              {product.description.split("").slice(0, 80)}...
             </Typography>
           )}
           <Typography variant="h6" color="textPrimary" component="p">
-            Rs: {price}
+            Rs: {product.price}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -40,11 +44,11 @@ export default function ProductCard({
         <Button
           size="small"
           color="primary"
-          onClick={() => history.push(`/view-product/${id}`)}
+          onClick={() => history.push(`/view-product/${product._id}`)}
         >
           View Product
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={handleAddToCart}>
           Add to cart
         </Button>
       </CardActions>

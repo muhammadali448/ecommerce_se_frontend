@@ -31,19 +31,11 @@ class Home extends Component {
                   <h2>Feature Products</h2>
                 </div>
                 <Grid container spacing={3}>
-                  {product.productsBySell.map(
-                    ({ name, description, price, _id, photo }) => (
-                      <Grid key={_id} item md={3} lg={3}>
-                        <ProductCard
-                          id={_id}
-                          name={name}
-                          photo={photo}
-                          description={description}
-                          price={price}
-                        />
-                      </Grid>
-                    )
-                  )}
+                  {product.productsBySell.map(product => (
+                    <Grid key={product._id} item md={3} lg={3}>
+                      <ProductCard product={product} />
+                    </Grid>
+                  ))}
                 </Grid>
               </Fragment>
               <Fragment>
@@ -52,15 +44,9 @@ class Home extends Component {
                 </div>
                 <Grid container spacing={3}>
                   {product.productsByArrival.map(
-                    ({ name, description, price, _id, photo }) => (
-                      <Grid key={_id} item md={3} lg={3}>
-                        <ProductCard
-                          id={_id}
-                          name={name}
-                          photo={photo}
-                          description={description}
-                          price={price}
-                        />
+                    (product) => (
+                      <Grid key={product._id} item md={3} lg={3}>
+                        <ProductCard product={product} />
                       </Grid>
                     )
                   )}
