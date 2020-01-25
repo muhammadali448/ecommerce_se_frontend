@@ -12,8 +12,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { useStyles, BootstrapInput } from "./styles";
 import SearchList from "../../common/SearchList";
 import NativeSelect from "@material-ui/core/NativeSelect";
-import { getTotalItems } from "../../helpers/cart";
-
 
 const ListItemLink = props => {
   return <Button component={Link} {...props} />;
@@ -35,7 +33,9 @@ export const Menu = withRouter(
     authenticated,
     admin,
     logout,
+    getCart,
     product,
+    cart,
     searchProducts,
     getCategories,
     category
@@ -46,7 +46,8 @@ export const Menu = withRouter(
 
     useEffect(() => {
       getCategories();
-    }, [getCategories]);
+      getCart();
+    }, [getCategories, getCart]);
 
     const handleCategoryChange = e => {
       setCategoryValue(e.target.value);
@@ -99,7 +100,7 @@ export const Menu = withRouter(
               style={isActive(history, "/cart")}
               to="/cart"
             >
-              <Badge badgeContent={getTotalItems()} color="secondary">
+              <Badge badgeContent={cart.cart.length} color="secondary">
                 <ShoppingCartIcon fontSize="large" />
               </Badge>
             </ListItemLink>

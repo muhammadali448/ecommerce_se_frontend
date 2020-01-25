@@ -16,9 +16,13 @@ const useStyles = makeStyles({
     backgroundColor: "#E7E7E7",
     marginBottom: 18
   },
-  btns: {
+  price: { color: "#f50057" },
+  proceed: {
     display: "flex",
-    justifyContent: "flex-end"
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E7E7E7"
   }
 });
 

@@ -1,4 +1,6 @@
-export const addToCart = (item, next) => {
+import { SET_CART } from "../types";
+
+export const addToCart = (item, next) => dispatch => {
   let cart = [];
   if (typeof window !== "undefined") {
     if (localStorage.getItem("cart")) {
@@ -12,20 +14,15 @@ export const addToCart = (item, next) => {
     });
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    dispatch({
+      type: SET_CART,
+      payload: cart
+    });
     next();
   }
 };
 
-export const getTotalItems = () => {
-  if (typeof window !== "undefined") {
-    if (localStorage.getItem("cart")) {
-      return JSON.parse(localStorage.getItem("cart")).length;
-    }
-  }
-  return 0;
-};
-
-export const updateItem = (count, productId) => {
+export const updateItem = (count, productId) => dispatch => {
   let cart = [];
   if (typeof window !== "undefined") {
     if (localStorage.getItem("cart")) {
@@ -33,10 +30,14 @@ export const updateItem = (count, productId) => {
     }
     cart = cart.map(p => (p._id === productId ? { ...p, count } : p));
     localStorage.setItem("cart", JSON.stringify(cart));
+    dispatch({
+      type: SET_CART,
+      payload: cart
+    });
   }
 };
 
-export const removeItem = (productId) => {
+export const removeItem = productId => dispatch => {
   let cart = [];
   if (typeof window !== "undefined") {
     if (localStorage.getItem("cart")) {
@@ -44,15 +45,20 @@ export const removeItem = (productId) => {
     }
     cart = cart.filter(p => p._id !== productId);
     localStorage.setItem("cart", JSON.stringify(cart));
+    dispatch({
+      type: SET_CART,
+      payload: cart
+    });
   }
-  return cart;
 };
 
-export const getCart = () => {
+export const getCart = () => dispatch => {
   if (typeof window !== "undefined") {
     if (localStorage.getItem("cart")) {
-      return JSON.parse(localStorage.getItem("cart"));
+      dispatch({
+        type: SET_CART,
+        payload: JSON.parse(localStorage.getItem("cart"))
+      });
     }
   }
-  return [];
 };

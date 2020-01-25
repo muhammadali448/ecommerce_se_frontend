@@ -12,34 +12,25 @@ import AddIcon from "@material-ui/icons/Add";
 import SubtractIcon from "@material-ui/icons/Remove";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
-import { updateItem, removeItem } from "../../helpers/cart";
 import useStyles from "./styles";
 import "./input.css";
 
-export default function ProductCartView({
-  product,
-  removeFromCart,
-  setRun = f => f, // default value of function
-  run = undefined
-}) {
+export default function ProductCartView({ product, removeItem, updateItem }) {
   const [count, setCount] = useState(product.count);
   const classes = useStyles();
 
   const handleAddCount = () => {
-    setRun(!run);
     setCount(count + 1);
     updateItem(count + 1, product._id);
   };
 
   const handleSubtractCount = () => {
-    setRun(!run);
     setCount(count - 1);
     updateItem(count - 1, product._id);
   };
 
   const handleRemove = () => {
-    removeItem(product._id)
-    setRun(!run);
+    removeItem(product._id);
   };
 
   return (

@@ -1,19 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import { getCart } from "../../helpers/cart";
 import useStyles from "./styles";
 import ProductCartView from "../../common/ProductCartView";
-export default function Cart() {
-  const [items, setItems] = useState([]);
-  const [run, setRun] = useState(false);
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
+
+const ButtonLink = props => {
+  return (
+    <Button variant="contained" color="primary" component={Link} {...props} />
+  );
+};
+
+export default function Cart({
+  authenticated,
+  cart,
+  getCart,
+  removeItem,
+  updateItem
+}) {
   const classes = useStyles();
   useEffect(() => {
-    setItems(getCart());
-  }, [run]);
+    getCart();
+  }, [getCart]);
 
   const handleTotal = () =>
-    items.reduce((current, next) => {
+    cart.cart.reduce((current, next) => {
       return current + next.count * next.price;
     }, 0);
 
@@ -24,13 +36,13 @@ export default function Cart() {
           <div className={classes.heading}>
             <h2>Shopping Cart</h2>
           </div>
-          {items.length > 0 ? (
-            items.map(product => (
+          {cart.cart.length > 0 ? (
+            cart.cart.map(product => (
               <ProductCartView
                 key={product._id}
+                removeItem={removeItem}
                 product={product}
-                setRun={setRun}
-                run={run}
+                updateItem={updateItem}
               />
             ))
           ) : (
@@ -38,10 +50,19 @@ export default function Cart() {
           )}
         </Grid>
         <Grid item md={3} lg={3}>
-          <div className={classes.heading}>
+          <div className={classes.proceed}>
             <h2>
-              Subtotal ({items.length} items): Rs.{handleTotal()}
+              Subtotal ({cart.cart.length} items):{" "}
+              <span className={classes.price}>Rs.{handleTotal()}</span>
             </h2>
+            {authenticated ? (
+              <Button variant="contained" color="primary">
+                Proceed to checkout
+              </Button>
+            ) : (
+              <ButtonLink to="/login">Sign in to checkout</ButtonLink>
+            )}
+            <br />
           </div>
         </Grid>
       </Grid>

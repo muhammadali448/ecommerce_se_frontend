@@ -8,8 +8,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "./styles";
 import { useHistory } from "react-router-dom";
-import { addToCart } from "../../helpers/cart";
-export default function ProductCard({ product, viewProduct }) {
+export default function ProductCard({ product, viewProduct, addToCart }) {
   const classes = useStyles();
   const history = useHistory();
   const handleAddToCart = () => {

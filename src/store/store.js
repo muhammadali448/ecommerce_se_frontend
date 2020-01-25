@@ -5,12 +5,14 @@ import { uiReducer } from "./reducers/ui";
 import { userReducer } from "./reducers/user";
 import { categoryReducer } from "./reducers/category";
 import { productReducer } from "./reducers/products";
+import { cartReducer } from "./reducers/cart";
 const initialState = {};
 const middleware = [thunk];
 const reducers = combineReducers({
   form: formReducer,
   user: userReducer,
   category: categoryReducer,
+  cart: cartReducer,
   product: productReducer,
   UI: uiReducer
 });

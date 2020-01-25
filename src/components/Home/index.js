@@ -14,7 +14,7 @@ class Home extends Component {
   }
 
   render() {
-    const { loading, errors, product, classes } = this.props;
+    const { loading, errors, product, classes, addToCart } = this.props;
     return (
       <Fragment>
         <PageDetails
@@ -33,7 +33,7 @@ class Home extends Component {
                 <Grid container spacing={3}>
                   {product.productsBySell.map(product => (
                     <Grid key={product._id} item md={3} lg={3}>
-                      <ProductCard product={product} />
+                      <ProductCard addToCart={addToCart} product={product} />
                     </Grid>
                   ))}
                 </Grid>
@@ -43,13 +43,11 @@ class Home extends Component {
                   <h2>New Arrivals</h2>
                 </div>
                 <Grid container spacing={3}>
-                  {product.productsByArrival.map(
-                    (product) => (
-                      <Grid key={product._id} item md={3} lg={3}>
-                        <ProductCard product={product} />
-                      </Grid>
-                    )
-                  )}
+                  {product.productsByArrival.map(product => (
+                    <Grid key={product._id} item md={3} lg={3}>
+                      <ProductCard addToCart={addToCart} product={product} />
+                    </Grid>
+                  ))}
                 </Grid>
               </Fragment>
             </Fragment>
