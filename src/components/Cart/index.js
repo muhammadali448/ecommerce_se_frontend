@@ -9,6 +9,7 @@ import DropIn from "braintree-web-drop-in-react";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../store/actions/admin";
 import axios from "axios";
+import ShowMessage from "../../common/ShowMessage";
 
 const ButtonLink = props => {
   return (
@@ -20,6 +21,7 @@ export default function Cart({
   authenticated,
   userId,
   cart,
+  pay,
   getCart,
   removeItem,
   updateItem
@@ -27,6 +29,7 @@ export default function Cart({
   const classes = useStyles();
   let Instance = useRef({});
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -40,20 +43,16 @@ export default function Cart({
 
   const handleBuy = async () => {
     // Send the nonce to your server
-    try {
-      const { nonce } = await Instance.requestPaymentMethod();
-      console.log("---total: ", nonce, handleTotal());
-      /* const res = await axios.get(
-        `${BASE_URL}/payment/braintree/getToken/${userId}`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token")
-          }
-        }
-      ); */
-    } catch (error) {
-      console.log(error.message);
-    }
+    const { nonce } = await Instance.requestPaymentMethod();
+    pay(
+      {
+        paymentMethodNonce: nonce,
+        amount: handleTotal()
+      },
+      () => {
+        setSuccess(true);
+      }
+    );
   };
 
   const handleCheckout = async () => {
@@ -77,6 +76,11 @@ export default function Cart({
 
   return (
     <Container maxWidth="lg" className={classes.mt}>
+      <ShowMessage
+        message="Thanks your payment was succesfull"
+        open={success}
+        setOpen={open => setSuccess(open)}
+      />
       <Grid container spacing={1}>
         <Grid item md={9} lg={9}>
           <div className={classes.heading}>

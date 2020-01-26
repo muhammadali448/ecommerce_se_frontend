@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import Cart from "../../components/Cart";
 import { connect } from "react-redux";
 import { getProductsByFilters } from "../../store/actions/admin";
-import { removeItem, updateItem, getCart } from "../../store/actions/cart";
+import { removeItem, updateItem, getCart, pay } from "../../store/actions/cart";
 class CartContainer extends Component {
   render() {
     const {
       UI: { loading, errors },
       getProductsByFilters,
+      pay,
       product,
       authenticated,
       userId,
@@ -20,6 +21,7 @@ class CartContainer extends Component {
       <Cart
         loading={loading}
         authenticated={authenticated}
+        pay={pay}
         errors={errors}
         userId={userId}
         product={product}
@@ -52,5 +54,6 @@ export default connect(mapStateToProps, {
   getProductsByFilters,
   getCart,
   removeItem,
-  updateItem
+  updateItem,
+  pay
 })(CartContainer);
