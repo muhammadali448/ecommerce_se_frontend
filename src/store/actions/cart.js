@@ -1,5 +1,6 @@
 import { SET_CART, SET_ERRORS } from "../types";
 import { BASE_URL, clearErrors } from "./admin";
+import { addOrder } from "./order";
 import axios from "axios";
 export const addToCart = (item, next) => dispatch => {
   let cart = [];
@@ -23,7 +24,7 @@ export const addToCart = (item, next) => dispatch => {
   }
 };
 
-export const pay = (data, cb) => async (dispatch, store) => {
+export const pay = (data, order, cb) => async (dispatch, store) => {
   try {
     const res = await axios.post(
       `${BASE_URL}/payment/braintree/checkout/${store().user._id}`,
@@ -35,6 +36,13 @@ export const pay = (data, cb) => async (dispatch, store) => {
       }
     );
     if (res.data.success) {
+      dispatch(
+        addOrder({
+          ...order,
+          transaction_id: res.data.transaction.id,
+          amount: res.data.transaction.amount
+        })
+      );
       localStorage.removeItem("cart");
       dispatch({
         type: SET_CART,

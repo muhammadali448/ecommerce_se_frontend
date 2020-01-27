@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment, useRef } from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from "@material-ui/core/TextField";
 import useStyles from "./styles";
 import ProductCartView from "../../common/ProductCartView";
 import Button from "@material-ui/core/Button";
@@ -27,14 +28,19 @@ export default function Cart({
   updateItem
 }) {
   const classes = useStyles();
-  let Instance = useRef({});
+  let [Instance, setInstance] = useState({});
   const [loading, setLoading] = useState(false);
+  const [address, setAddress] = useState("");
   const [success, setSuccess] = useState(false);
   const [token, setToken] = useState(null);
 
   useEffect(() => {
     getCart();
   }, [getCart]);
+
+  const handleAddressChange = event => {
+    setAddress(event.target.value);
+  };
 
   const handleTotal = () =>
     cart.cart.reduce((current, next) => {
@@ -43,16 +49,23 @@ export default function Cart({
 
   const handleBuy = async () => {
     // Send the nonce to your server
-    const { nonce } = await Instance.requestPaymentMethod();
-    pay(
-      {
-        paymentMethodNonce: nonce,
-        amount: handleTotal()
-      },
-      () => {
-        setSuccess(true);
-      }
-    );
+    console.log(Instance);
+    try {
+      const { nonce } = await Instance.requestPaymentMethod();
+      pay(
+        {
+          paymentMethodNonce: nonce,
+          amount: handleTotal()
+        },
+        { cart: cart.cart, address },
+        () => {
+          setAddress("");
+          setSuccess(true);
+        }
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleCheckout = async () => {
@@ -128,9 +141,15 @@ export default function Cart({
                 )}
                 {token && cart.cart.length > 0 && (
                   <div className={classes.checkout}>
+                    <TextField
+                      id="address"
+                      label="Delivery Address"
+                      value={address}
+                      onChange={handleAddressChange}
+                    />
                     <DropIn
                       options={{ authorization: token }}
-                      onInstance={instance => (Instance = instance)}
+                      onInstance={instance => setInstance(instance)}
                     />
                     <Button
                       className={classes.buy}

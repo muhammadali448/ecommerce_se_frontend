@@ -10,7 +10,6 @@ const replaceCAndStr = no => {
   return parseInt(no.replace(/\,/g, ""), 10);
 };
 export const formatRangeForApi = ranges => {
-  // console.log("----ranges: ", ranges);
   const priceFilter = [];
   ranges.forEach(element => {
     let prices = element.split("-");

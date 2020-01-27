@@ -6,6 +6,7 @@ import { userReducer } from "./reducers/user";
 import { categoryReducer } from "./reducers/category";
 import { productReducer } from "./reducers/products";
 import { cartReducer } from "./reducers/cart";
+import { orderReducer } from "./reducers/order";
 const initialState = {};
 const middleware = [thunk];
 const reducers = combineReducers({
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   category: categoryReducer,
   cart: cartReducer,
   product: productReducer,
+  order: orderReducer,
   UI: uiReducer
 });
 

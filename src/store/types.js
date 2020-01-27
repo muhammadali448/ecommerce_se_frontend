@@ -31,3 +31,10 @@ export const SET_RELATED_PRODUCTS = "SET_RELATED_PRODUCTS"
 
 // Cart
 export const SET_CART = "SET_CART";
+
+
+// Category Admin
+export const SET_ORDERS = "SET_ORDERS";
+export const ADD_ORDER = "ADD_ORDER";
+export const SET_ORDER = "SET_ORDER";
+export const DELETE_ORDER = "DELETE_ORDER";
