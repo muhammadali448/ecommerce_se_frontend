@@ -27,7 +27,7 @@ export const getOrders = () => async (dispatch, store) => {
     type: LOADING_UI
   });
   try {
-    const res = await axios.get(`${BASE_URL}/order/list`);
+    const res = await axios.get(`${BASE_URL}/order/list/${store().user._id}`);
     dispatch({ type: SET_ORDERS, payload: res.data });
     dispatch(clearErrors());
   } catch (error) {
