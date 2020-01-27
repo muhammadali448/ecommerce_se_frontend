@@ -5,7 +5,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import useStyles from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import moment from "moment";
 
 export default function ProductShopCard({
@@ -14,12 +14,20 @@ export default function ProductShopCard({
   photo,
   name,
   description,
+  // addToCart,
   price,
   category,
   createdAt,
   quantity
 }) {
   const classes = useStyles();
+  const history = useHistory();
+  // const handleAddToCart = () => {
+  //   addToCart(product, () => {
+  //     history.push("/cart");
+  //   });
+  // };
+
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.cover} image={photo.url} title={name} />
@@ -78,6 +86,7 @@ export default function ProductShopCard({
               variant="contained"
               size={viewProduct ? "large" : "small"}
               color="primary"
+              // onClick={handleAddToCart}
             >
               Add to cart
             </Button>
