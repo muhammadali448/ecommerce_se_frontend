@@ -1,18 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { AdminOrders } from "../../components/AdminOrders";
-import { getOrders } from "../../store/actions/order";
+import {
+  getOrders,
+  getStatusValues,
+  updateStatusValue
+} from "../../store/actions/order";
 class AdminOrdersContainer extends Component {
   render() {
     const {
       UI: { loading, errors },
       getOrders,
+      getStatusValues,
+      updateStatusValue,
       order,
       user
     } = this.props;
     return (
       <AdminOrders
         user={user}
+        getStatusValues={getStatusValues}
+        updateStatusValue={updateStatusValue}
         loading={loading}
         errors={errors}
         order={order}
@@ -29,5 +37,7 @@ const mapStateToProps = ({ user, UI, order }) => ({
 });
 
 export default connect(mapStateToProps, {
-  getOrders
+  getOrders,
+  updateStatusValue,
+  getStatusValues
 })(AdminOrdersContainer);

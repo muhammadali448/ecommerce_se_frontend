@@ -9,11 +9,19 @@ import useStyles from "./styles";
 import { AdminLinks } from "../../common/AdminLinks";
 import { OrdersTable } from "./ordersTable";
 
-export function AdminOrders({ loading, errors, getOrders, order }) {
+export function AdminOrders({
+  loading,
+  errors,
+  updateStatusValue,
+  getOrders,
+  getStatusValues,
+  order
+}) {
   const classes = useStyles();
   useEffect(() => {
     getOrders();
-  }, [getOrders]);
+    getStatusValues();
+  }, [getOrders, getStatusValues]);
   return (
     <Fragment>
       <PageDetails title="Orders" description="Orders details" />
@@ -27,7 +35,7 @@ export function AdminOrders({ loading, errors, getOrders, order }) {
               <div className={classes.mt}>
                 {loading ? (
                   <LinearProgress />
-                ) : order.orders.length < 0 ? (
+                ) : order.orders.length < 0 && order.statusValues < 0 ? (
                   <div className={classes.noOrders}>
                     <Typography variant="h3" color="textSecondary">
                       No Orders
@@ -42,7 +50,11 @@ export function AdminOrders({ loading, errors, getOrders, order }) {
                     >
                       Total Orders: {order.orders.length}
                     </Typography>
-                    <OrdersTable orders={order.orders} />
+                    <OrdersTable
+                      statusValues={order.statusValues}
+                      updateStatusValue={updateStatusValue}
+                      orders={order.orders}
+                    />
                   </Fragment>
                 )}
               </div>
