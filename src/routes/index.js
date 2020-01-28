@@ -6,6 +6,7 @@ import SignupContainer from "../containers/SignupContainer/";
 import MenuContainer from "../containers/MenuContainer";
 import AuthRoute from "./AuthRoute";
 import UserDashboardContainer from "../containers/UserDashboardContainer";
+import UserProfileUpdateContainer from "../containers/UserProfileUpdateContainer";
 import AdminDashboardContainer from "../containers/AdminDashboardContainer";
 import AdminCreateCategoryContainer from "../containers/AdminCreateCategoryContainer";
 import AdminCreateProductContainer from "../containers/AdminCreateProductContainer";
@@ -33,6 +34,11 @@ export const AppRoutes = () => (
           exact
           path="/userDashboard"
           component={UserDashboardContainer}
+        />
+        <AuthRoute
+          exact
+          path="/user/profileUpdate"
+          component={UserProfileUpdateContainer}
         />
         <AdminRoute
           exact

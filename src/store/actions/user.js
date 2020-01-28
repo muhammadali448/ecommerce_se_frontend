@@ -68,6 +68,22 @@ export const logoutUser = history => async dispatch => {
   }
 };
 
+export const updateUserInfo = data => async (dispatch, store) => {
+  try {
+    const res = await axios.put(`${BASE_URL}/user/${store().user._id}`, data);
+    dispatch({
+      type: SET_USER,
+      payload: res.data
+    });
+    dispatch({ type: CLEAR_ERRORS });
+  } catch (error) {
+    // dispatch({
+    //   type: SET_ERRORS,
+    //   payload: error.response.data
+    // });
+  }
+};
+
 export const signupUser = (userData, history) => async dispatch => {
   dispatch({
     type: LOADING_UI
