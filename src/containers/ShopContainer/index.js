@@ -6,6 +6,7 @@ import {
   getProductsBySearch,
   getProductsPriceRanges
 } from "../../store/actions/admin";
+import { addToCart } from "../../store/actions/cart";
 import { store } from "../../store/store";
 import {
   SET_PRODUCTS_PRICE_RANGES,
@@ -24,12 +25,14 @@ class ShopContainer extends Component {
       getCategories,
       getProductsBySearch,
       getProductsPriceRanges,
+      addToCart,
       category
     } = this.props;
     return (
       <Shop
         loading={loading}
         errors={errors}
+        addToCart={addToCart}
         getProductsBySearch={getProductsBySearch}
         getCategories={getCategories}
         getProductsPriceRanges={getProductsPriceRanges}
@@ -49,5 +52,6 @@ const mapStateToProps = ({ UI, product, category }) => ({
 export default connect(mapStateToProps, {
   getCategories,
   getProductsBySearch,
-  getProductsPriceRanges
+  getProductsPriceRanges,
+  addToCart
 })(ShopContainer);

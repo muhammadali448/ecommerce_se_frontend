@@ -49,7 +49,7 @@ export const getUserData = userId => async dispatch => {
   }
 };
 
-export const logoutUser = () => async dispatch => {
+export const logoutUser = history => async dispatch => {
   try {
     await axios.get(`${BASE_URL}/auth/signout`);
     localStorage.removeItem("token");
@@ -59,6 +59,7 @@ export const logoutUser = () => async dispatch => {
     dispatch({
       type: SET_UNAUTHENTICATED
     });
+    history.push("/");
   } catch (error) {
     dispatch({
       type: SET_ERRORS,
@@ -80,6 +81,7 @@ export const signupUser = (userData, history) => async dispatch => {
     dispatch({ type: CLEAR_ERRORS });
     history.push("/login");
   } catch (error) {
+    console.log("error: ", error.message);
     dispatch({
       type: SET_ERRORS,
       payload: error.response.data

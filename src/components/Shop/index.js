@@ -16,6 +16,7 @@ const Shop = ({
   getProductsBySearch,
   getProductsPriceRanges,
   product,
+  addToCart,
   errors,
   loading
 }) => {
@@ -107,22 +108,17 @@ const Shop = ({
                     )}
                     {product.productsByCategories.filterProducts &&
                       product.productsByCategories.filterProducts.map(
-                        ({
-                          _id,
-                          name,
-                          photo,
-                          description,
-                          price,
-                          quantity
-                        }) => (
+                        product => (
                           <ProductShopCard
-                            key={_id}
-                            id={_id}
-                            name={name}
-                            price={price}
-                            quantity={quantity}
-                            photo={photo}
-                            description={description}
+                            key={product._id}
+                            product={product}
+                            addToCart={addToCart}
+                            id={product._id}
+                            name={product.name}
+                            price={product.price}
+                            quantity={product.quantity}
+                            photo={product.photo}
+                            description={product.description}
                           />
                         )
                       )}

@@ -144,7 +144,7 @@ export const Menu = withRouter(
                 >
                   Dashboard
                 </ListItemLink>
-                <Button color="inherit" onClick={() => logout()}>
+                <Button color="inherit" onClick={() => logout(history)}>
                   Logout
                 </Button>
               </Fragment>

@@ -11,10 +11,11 @@ import moment from "moment";
 export default function ProductShopCard({
   id,
   viewProduct,
+  product,
   photo,
   name,
   description,
-  // addToCart,
+  addToCart,
   price,
   category,
   createdAt,
@@ -22,11 +23,11 @@ export default function ProductShopCard({
 }) {
   const classes = useStyles();
   const history = useHistory();
-  // const handleAddToCart = () => {
-  //   addToCart(product, () => {
-  //     history.push("/cart");
-  //   });
-  // };
+  const handleAddToCart = () => {
+    addToCart(product, () => {
+      history.push("/cart");
+    });
+  };
 
   return (
     <Card className={classes.card}>
@@ -86,7 +87,7 @@ export default function ProductShopCard({
               variant="contained"
               size={viewProduct ? "large" : "small"}
               color="primary"
-              // onClick={handleAddToCart}
+              onClick={handleAddToCart}
             >
               Add to cart
             </Button>

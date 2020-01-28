@@ -7,9 +7,12 @@ import { categoryReducer } from "./reducers/category";
 import { productReducer } from "./reducers/products";
 import { cartReducer } from "./reducers/cart";
 import { orderReducer } from "./reducers/order";
+import { SET_UNAUTHENTICATED } from "./types";
 const initialState = {};
 const middleware = [thunk];
-const reducers = combineReducers({
+
+const appReducer = combineReducers({
+  /* your app’s top-level reducers */
   form: formReducer,
   user: userReducer,
   category: categoryReducer,
@@ -19,8 +22,26 @@ const reducers = combineReducers({
   UI: uiReducer
 });
 
+const rootReducer = (state, action) => {
+  if (action.type === SET_UNAUTHENTICATED) {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
+
+// const reducers = combineReducers({
+//   form: formReducer,
+//   user: userReducer,
+//   category: categoryReducer,
+//   cart: cartReducer,
+//   product: productReducer,
+//   order: orderReducer,
+//   UI: uiReducer
+// });
+
 export const store = createStore(
-  reducers,
+  rootReducer,
   initialState,
   compose(
     applyMiddleware(...middleware),

@@ -25,7 +25,7 @@ class Signup extends Component {
   };
 
   onSignup(data) {
-    this.props.signup(data);
+    this.props.signup(data, this.props.history);
   }
 
   render() {

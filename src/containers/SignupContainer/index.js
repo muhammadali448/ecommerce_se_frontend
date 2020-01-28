@@ -9,6 +9,7 @@ class SignupContainer extends Component {
     } = this.props;
     return (
       <SignupForm
+        history={this.props.history}
         signup={this.props.signupUser}
         loading={loading}
         errors={errors}

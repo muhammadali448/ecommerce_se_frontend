@@ -6,6 +6,17 @@ const useStyles = makeStyles(theme => ({
   mb: {
     marginBottom: 20
   },
+  details: {
+    display: "flex",
+    flex: 1
+  },
+  card: {
+    flex: 0.5
+  },
+  price: {
+    fontSize: 16,
+    fontWeight: "bold"
+  },
   noOrders: {
     display: "flex",
     justifyContent: "center",
