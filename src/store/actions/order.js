@@ -77,3 +77,20 @@ export const getOrders = () => async (dispatch, store) => {
     });
   }
 };
+
+export const getOrdersPurchaseHistory = cb => async (dispatch, store) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/user/order/history/${store().user._id}`
+    );
+    dispatch({ type: SET_ORDERS, payload: res.data });
+    dispatch(clearErrors());
+    cb();
+  } catch (error) {
+    console.log(error.message);
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data
+    });
+  }
+};

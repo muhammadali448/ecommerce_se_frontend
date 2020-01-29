@@ -6,6 +6,9 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginTop: 18
   },
+  mb: {
+    marginBottom: theme.spacing(2)
+  },
   bullet: {
     display: "inline-block",
     margin: "0 2px",

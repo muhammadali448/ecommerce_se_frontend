@@ -12,7 +12,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        authenticated && !admin ? (
+        authenticated && admin === false ? (
           <Component {...props} />
         ) : (
           <Redirect

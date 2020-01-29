@@ -15,6 +15,7 @@ const INITIAL_STATE = {
 export const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SET_AUTHENTICATED:
+      console.log("--admin: aaa", action.payload.admin);
       return {
         ...state,
         authenticated: true,
