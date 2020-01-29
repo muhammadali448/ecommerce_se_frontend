@@ -8,7 +8,8 @@ import {
   SET_PRODUCTS_BY_CATEGORIES,
   SET_PRODUCTS_PRICE_RANGES,
   SET_PRODUCTS_BY_SEARCH,
-  SET_RELATED_PRODUCTS
+  SET_RELATED_PRODUCTS,
+  PRODUCT_UPDATE
 } from "../types";
 
 const INITIAL_STATE = {
@@ -78,6 +79,16 @@ export const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         products: state.products.filter(
           product => product._id !== action.payload
+        )
+      };
+    case PRODUCT_UPDATE:
+      return {
+        ...state,
+        loading: false,
+        products: state.products.map(product =>
+          product._id === action.payload._id
+            ? { ...product, ...action.payload }
+            : product
         )
       };
     case ADD_PRODUCT:

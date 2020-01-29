@@ -2,7 +2,7 @@ import React from "react";
 import MaterialTable from "material-table";
 import moment from "moment";
 
-export const ProductsTable = ({ products }) => (
+export const ProductsTable = ({ products, updateProduct, deleteProduct }) => (
   <React.Fragment>
     <MaterialTable
       title="Products"
@@ -21,7 +21,11 @@ export const ProductsTable = ({ products }) => (
         // },
         { title: "Name", field: "name" },
         { title: "Quantity", field: "quantity", type: "numeric" },
-        { title: "Price", field: "price", type: "numeric" },
+        {
+          title: "Price",
+          field: "price",
+          type: "numeric"
+        },
         // {
         //   title: "Created",
         //   field: "createdAt",
@@ -32,6 +36,25 @@ export const ProductsTable = ({ products }) => (
         { title: "Shipping", field: "shipping", type: "boolean" }
       ]}
       data={products}
+      editable={{
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            updateProduct(
+              { price: Number(newData.price) },
+              oldData._id,
+              success => (success ? resolve() : reject())
+            );
+            // resolve();
+          }),
+        onRowDelete: oldData =>
+          new Promise((resolve, reject) => {
+            console.log(deleteProduct);
+            deleteProduct(oldData._id, success => {
+              console.log("ss", success);
+              return success ? resolve() : reject();
+            });
+          })
+      }}
     />
   </React.Fragment>
 );

@@ -12,7 +12,9 @@ import {
   SET_PRODUCTS_BY_SEARCH,
   SET_PRODUCTS_PRICE_RANGES,
   SET_PRODUCT,
-  SET_RELATED_PRODUCTS
+  SET_RELATED_PRODUCTS,
+  PRODUCT_UPDATE,
+  DELETE_PRODUCT
 } from "../types";
 import { reset } from "redux-form";
 import axios from "axios";
@@ -205,6 +207,52 @@ export const addProduct = data => async (dispatch, store) => {
       type: SET_ERRORS,
       payload: error.response.data
     });
+  }
+};
+
+export const deleteProduct = (productId, cb) => async (dispatch, store) => {
+  console.log("insert");
+  try {
+    await axios.delete(
+      `${BASE_URL}/product/delete/${productId}/${store().user._id}`
+    );
+    dispatch({ type: DELETE_PRODUCT, payload: productId });
+    dispatch(clearErrors());
+    cb(true);
+  } catch (error) {
+    console.log("error delete: ", error.message);
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data
+    });
+    cb(false);
+  }
+};
+
+export const updateProduct = (data, productId, cb) => async (
+  dispatch,
+  store
+) => {
+  try {
+    var body = new FormData();
+    Object.keys(data).forEach(key => {
+      body.append(key, data[key]);
+    });
+
+    const res = await axios.put(
+      `${BASE_URL}/product/update/${productId}/${store().user._id}`,
+      body
+    );
+    dispatch({ type: PRODUCT_UPDATE, payload: res.data.data });
+    dispatch(clearErrors());
+    cb(true);
+  } catch (error) {
+    console.log("error update: ", error.message);
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data
+    });
+    cb(false);
   }
 };
 

@@ -17,7 +17,6 @@ export const OrdersTable = ({ orders, statusValues, updateStatusValue }) => {
 
   const handleChange = (e, orderId) => {
     updateStatusValue(orderId, e.target.value);
-    console.log(e.target.value, orderId);
   };
 
   return (

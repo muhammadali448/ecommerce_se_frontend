@@ -71,6 +71,8 @@ class AdminCreateProduct extends Component {
     const {
       classes,
       product,
+      updateProduct,
+      deleteProduct,
       loading,
       handleSubmit,
       submitting,
@@ -189,7 +191,11 @@ class AdminCreateProduct extends Component {
                   {loading ? (
                     <LinearProgress />
                   ) : (
-                    <ProductsTable products={product.products} />
+                    <ProductsTable
+                      deleteProduct={deleteProduct}
+                      updateProduct={updateProduct}
+                      products={product.products}
+                    />
                   )}
                 </div>
               </Fragment>

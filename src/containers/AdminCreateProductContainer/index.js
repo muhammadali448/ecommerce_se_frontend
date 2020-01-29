@@ -4,7 +4,9 @@ import { AdminCreateProductForm } from "../../components/AdminCreateProduct";
 import {
   addProduct,
   getProducts,
-  getCategories
+  getCategories,
+  deleteProduct,
+  updateProduct
 } from "../../store/actions/admin";
 class AdminCreateProductContainer extends Component {
   render() {
@@ -12,7 +14,9 @@ class AdminCreateProductContainer extends Component {
       UI: { loading, errors },
       user,
       addProduct,
+      deleteProduct,
       getProducts,
+      updateProduct,
       product,
       category,
       getCategories
@@ -21,6 +25,8 @@ class AdminCreateProductContainer extends Component {
       <AdminCreateProductForm
         user={user}
         getCategories={getCategories}
+        updateProduct={updateProduct}
+        deleteProduct={deleteProduct}
         loading={loading}
         errors={errors}
         addProduct={addProduct}
@@ -42,5 +48,7 @@ const mapStateToProps = ({ user, UI, product, category }) => ({
 export default connect(mapStateToProps, {
   addProduct,
   getProducts,
+  updateProduct,
+  deleteProduct,
   getCategories
 })(AdminCreateProductContainer);
