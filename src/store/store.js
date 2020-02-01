@@ -6,6 +6,7 @@ import { userReducer } from "./reducers/user";
 import { categoryReducer } from "./reducers/category";
 import { productReducer } from "./reducers/products";
 import { cartReducer } from "./reducers/cart";
+import { brandReducer } from "./reducers/brand";
 import { orderReducer } from "./reducers/order";
 import { SET_UNAUTHENTICATED } from "./types";
 const initialState = {};
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   user: userReducer,
   category: categoryReducer,
   cart: cartReducer,
+  brand: brandReducer,
   product: productReducer,
   order: orderReducer,
   UI: uiReducer

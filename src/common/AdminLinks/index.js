@@ -28,6 +28,13 @@ export const AdminLinks = () => {
       </ListItemLink>
       <ListItemLink
         color="inherit"
+        style={isActive(history, "/admin/createBrand")}
+        to="/admin/createBrand"
+      >
+        Create Brand
+      </ListItemLink>
+      <ListItemLink
+        color="inherit"
         style={isActive(history, "/admin/createProduct")}
         to="/admin/createProduct"
       >

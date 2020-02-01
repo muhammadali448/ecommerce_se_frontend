@@ -5,22 +5,25 @@ import { addCategory } from "../../store/actions/admin";
 class AdminCreateCategoryContainer extends Component {
   render() {
     const {
-      UI: { loading, errors }
+      UI: { loading, errors },
+      addCategory,
+      category
     } = this.props;
     return (
       <AdminCreateCategory
-        user={this.props.user}
         loading={loading}
         errors={errors}
-        addCategory={this.props.addCategory}
+        category={category}
+        addCategory={addCategory}
       />
     );
   }
 }
 
-const mapStateToProps = ({ user, UI }) => ({
+const mapStateToProps = ({ user, UI, category }) => ({
   user,
-  UI
+  UI,
+  category
 });
 
 export default connect(mapStateToProps, { addCategory })(

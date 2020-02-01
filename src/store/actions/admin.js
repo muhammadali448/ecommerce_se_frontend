@@ -3,6 +3,7 @@ import {
   CLEAR_ERRORS,
   SET_ERRORS,
   ADD_CATEGORY,
+  ADD_BRAND,
   ADD_PRODUCT,
   SET_CATEGORIES,
   SET_PRODUCTS_BY_ARRIVAL,
@@ -14,12 +15,48 @@ import {
   SET_PRODUCT,
   SET_RELATED_PRODUCTS,
   PRODUCT_UPDATE,
-  DELETE_PRODUCT
+  DELETE_PRODUCT,
+  SET_BRANDS
 } from "../types";
 import { reset } from "redux-form";
 import axios from "axios";
 
 export const BASE_URL = "http://localhost:8000/api";
+
+export const addBrand = data => async (dispatch, store) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}/brand/create/${store().user._id}`,
+      data
+    );
+    dispatch({ type: ADD_BRAND, payload: res.data });
+    dispatch(clearErrors());
+    return true;
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data
+    });
+    return false;
+  }
+};
+
+export const getBrandsByCategory = categoryId => async (dispatch, store) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/brand/listByCategory/${categoryId}`
+    );
+    dispatch({ type: SET_BRANDS, payload: res.data });
+    dispatch(clearErrors());
+    return true;
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data
+    });
+    return false;
+  }
+};
 
 export const addCategory = data => async (dispatch, store) => {
   dispatch({
@@ -32,11 +69,13 @@ export const addCategory = data => async (dispatch, store) => {
     );
     dispatch({ type: ADD_CATEGORY, payload: res.data });
     dispatch(clearErrors());
+    return true;
   } catch (error) {
     dispatch({
       type: SET_ERRORS,
       payload: error.response.data
     });
+    return false;
   }
 };
 

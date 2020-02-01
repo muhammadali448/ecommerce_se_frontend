@@ -14,9 +14,9 @@ export function AdminCreateCategory({ user, addCategory, errors }) {
   const [name, setName] = useState("");
 
   const CategoryForm = () => (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paperA}>
       <form className={classes.form}>
-        <FormControl margin="normal">
+        <FormControl margin="normal" fullWidth>
           <TextField
             label="Name"
             type="text"
@@ -30,16 +30,16 @@ export function AdminCreateCategory({ user, addCategory, errors }) {
               {errors.error}
             </small>
           ) : null}
-          <Button
-            variant="contained"
-            disabled={name === ""}
-            color="primary"
-            onClick={() => addCategory({ name })}
-            className={classes.submit}
-          >
-            Add Category
-          </Button>
         </FormControl>
+        <Button
+          variant="contained"
+          disabled={name === ""}
+          color="primary"
+          onClick={() => addCategory({ name })}
+          className={classes.submit}
+        >
+          Add Category
+        </Button>
       </form>
     </Paper>
   );

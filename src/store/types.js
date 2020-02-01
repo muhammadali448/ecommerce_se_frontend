@@ -16,6 +16,12 @@ export const ADD_CATEGORY = "ADD_CATEGORY";
 export const SET_CATEGORY = "SET_CATEGORY";
 export const DELETE_CATEGORY = "DELETE_CATEGORY";
 
+// Brand Admin
+export const SET_BRANDS = "SET_BRANDS";
+export const ADD_BRAND = "ADD_BRAND";
+export const SET_BRAND = "SET_BRAND";
+export const DELETE_BRAND = "DELETE_BRAND";
+
 // Product Admin
 export const SET_PRODUCTS = "SET_PRODUCTS";
 export const PRODUCT_UPDATE = "PRODUCT_UPDATE";

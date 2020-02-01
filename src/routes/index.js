@@ -9,6 +9,7 @@ import UserDashboardContainer from "../containers/UserDashboardContainer";
 import UserProfileUpdateContainer from "../containers/UserProfileUpdateContainer";
 import AdminDashboardContainer from "../containers/AdminDashboardContainer";
 import AdminCreateCategoryContainer from "../containers/AdminCreateCategoryContainer";
+import AdminCreateBrandContainer from "../containers/AdminCreateBrandContainer";
 import AdminCreateProductContainer from "../containers/AdminCreateProductContainer";
 import AdminOrdersContainer from "../containers/AdminOrdersContainer";
 import ShopContainer from "../containers/ShopContainer";
@@ -49,6 +50,11 @@ export const AppRoutes = () => (
           exact
           path="/admin/createCategory"
           component={AdminCreateCategoryContainer}
+        />
+        <AdminRoute
+          exact
+          path="/admin/createBrand"
+          component={AdminCreateBrandContainer}
         />
         <AdminRoute
           exact

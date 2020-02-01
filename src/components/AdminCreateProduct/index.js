@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { reduxForm, Field, reset } from "redux-form";
+import { reduxForm, Field, reset, change, untouch } from "redux-form";
 import { store } from "../../store/store";
 import { PageDetails } from "../PageDetails";
 import Container from "@material-ui/core/Container";
@@ -26,9 +26,17 @@ class AdminCreateProduct extends Component {
   };
 
   componentDidMount() {
-    console.log("---CALLED");
     this.props.getCategories();
     this.props.getProducts();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      this.props.categorySelect &&
+      prevProps.categorySelect !== this.props.categorySelect
+    ) {
+      this.props.getBrandsByCategory(this.props.categorySelect.value);
+    }
   }
 
   handleChange = event => {
@@ -47,11 +55,16 @@ class AdminCreateProduct extends Component {
     store.dispatch(reset("AdminCreateProductForm"));
   };
 
+  handleCategoryChange = () => {
+    store.dispatch(change("AdminCreateProductForm", "brand", null));
+    store.dispatch(untouch("AdminCreateProductForm", "brand"));
+  };
+
   onAddProduct(data) {
     const { errors } = this.props;
     var body = new FormData();
     Object.keys(data).forEach(key => {
-      if (key === "category") {
+      if (key === "category" || key === "brand") {
         body.append(key, data[key].value);
       } else {
         body.append(key, data[key]);
@@ -71,18 +84,26 @@ class AdminCreateProduct extends Component {
     const {
       classes,
       product,
+      categorySelect,
       updateProduct,
       deleteProduct,
+      brand,
       loading,
       handleSubmit,
       submitting,
       category
     } = this.props;
+    let brandOptions;
     const categoriesOptions = category.categories.map(category => ({
       value: category._id,
       label: category.name
     }));
-    // console.log("--products: ", product.products);
+    if (categorySelect) {
+      brandOptions = brand.brands.map(brand => ({
+        value: brand.name,
+        label: brand.name
+      }));
+    }
     return (
       <Fragment>
         <PageDetails
@@ -163,10 +184,20 @@ class AdminCreateProduct extends Component {
                       <Field
                         name="category"
                         options={categoriesOptions}
+                        onChange={this.handleCategoryChange}
                         label="Category"
                         placeholder="Enter Category"
                         component={SelectInput}
                       />
+                      {categorySelect && (
+                        <Field
+                          name="brand"
+                          options={brandOptions}
+                          label="Brand"
+                          placeholder="Enter Brand"
+                          component={SelectInput}
+                        />
+                      )}
                       <Field
                         label="Shipping?"
                         name="shipping"
